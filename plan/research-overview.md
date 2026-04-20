@@ -5,3 +5,23 @@ Put all research artifacts in the `raw-research/` directory. When you do your re
 ## Research Summary
 
 ## Member Contributions
+
+### Jordan
+
+### Yuval
+
+### Alec
+
+### Angelo
+
+### Bowen
+
+### Fariba
+
+### Harvey
+
+### Jenny
+
+### Koji
+
+### Roy
