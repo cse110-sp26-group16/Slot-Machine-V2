@@ -19,31 +19,8 @@ Another trick that audio engineers use to keep the player engaged and wanting to
 
 Audio engineers and composers use musical scales in their slot machines as well. When you play/hear a musical scale, the ending note is the resolution and makes the scale sound full and complete. Audio engineers use this psychology to play unresolved scales in the case that a player does not match all symbols. For example if a slot has 6 symbols and you get 5 out of 6 symbols, you are left without the final note in the scale, leaving the scale unresolved and your brain hungering for the satisfaction of hearing the full scale. This makes the player want to roll again in order to hear it. 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+## How Audio Influences Player Behavior 
+A feature that slot machines use is called losses-disguised-as-wins (LDWs) which uses audio to make the player perceive losses as wins. This can make the user feel like they are winning when they are actually losing money. If a slot machine audio engineer implements a “winning” jingle for a small payout and the player hits many of these small wins but ends up with a negative payout, they may still seem satisfied with the outcome since their brain feels satisfied with the “winning” sound. 
 
 ## Sources
 1. https://fault-magazine.com/2025/04/why-sound-is-a-critical-element-in-modern-slot-design/
