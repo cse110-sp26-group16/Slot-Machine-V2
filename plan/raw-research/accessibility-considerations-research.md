@@ -2,9 +2,7 @@
 
 ## Why Accessibility Matters in This Experiment
 
-Accessibility isn’t just something extra to add at the end—it’s part of what makes software actually usable. For this assignment, it’s also a good way to judge how useful AI tools really are. If the code we generate looks nice but ignores accessibility, or if we have to constantly fix it ourselves, that tells us something important about the limits of these tools.
-
-Since we’re building a slot machine-style game with lots of animation and feedback, it’s pretty easy to accidentally make something that looks cool but is hard (or impossible) for some people to use.
+Accessibility is part of what makes software actually usable. Since we’re building a slot machine-style game with lots of animation and feedback, it’s pretty easy to accidentally make something that looks cool but is hard (or impossible) for some people to use.
 
 ---
 
@@ -61,20 +59,8 @@ A lot of generated UIs assume mouse input only, which is limiting.
 
 ---
 
-### 5. Structure and Screen Readers
 
-AI often generates layouts with lots of generic `<div>` elements, which don’t help accessibility.
-
-**What to aim for:**
-
-- use semantic HTML (`button`, `main`, `section`, etc.)
-- label controls clearly
-- announce important updates like results or balance changes
-- don’t rely only on visual layout to explain what’s happening
-
----
-
-### 6. Timing and Readability
+### 5. Timing and Readability
 
 If everything happens too fast, users can’t keep up.
 
@@ -83,33 +69,6 @@ If everything happens too fast, users can’t keep up.
 - give players enough time to read results
 - don’t rush transitions between states
 - make reel stopping and outcomes easy to follow
-
----
-
-## Using Accessibility in Prompts
-
-If we want better results from AI, we have to be specific. Accessibility won’t just happen on its own.
-
-**Examples of better prompts:**
-
-- “Make all controls keyboard accessible with visible focus states”
-- “Use semantic HTML and include ARIA labels where needed”
-- “Respect prefers-reduced-motion and offer a low-motion version”
-- “Do not rely on color alone to communicate results”
-
-Being clear like this should lead to more consistent output.
-
----
-
-## Why This Matters for the Experiment
-
-Accessibility connects directly to the goals of this assignment:
-
-- **Challenges with AI:** it often skips important usability details
-- **Planning:** accessibility needs to be considered early
-- **Prompt quality:** better instructions lead to better results
-- **User focus:** accessibility forces us to think about different users
-- **Team consistency:** everyone needs to follow the same patterns
 
 ---
 
