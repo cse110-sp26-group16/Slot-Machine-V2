@@ -7,6 +7,13 @@ More time and money is put into the sound and audio design of slot machine than 
 In the current year, many slot machines are created in collaboration with a theme (i.e. a movie, TV series, video game, etc.) in which players can hear their favorite theme song or voice actor when winning in a slot machine. This is all intentional, audio engineers use these audios to keep the player entertained while playing the machine.
 
 
+## The Design of a Slot Machine’s Audio
+The main task of an audio engineer who is working on a slot machine’s audio is to prevent the player from being sonically fatigued. To encourage this, the audio engineer must create music and sounds that are engaging and encourage the player to sit at the slot machine for a long time. Essentially, audio must not annoy/irritate the player.
+
+Sound designers typically compose these audios in a key that is usually associated with happiness. In the early days of slot machines, lots of the music was composed in the key of C major, which is a key associated with happiness and positive feelings. In the current time, composers create these audios in a variety of keys with a high bpm (beats per minute) ranging from 120-140 bpm.
+
+
+
 
 
 
