@@ -4,7 +4,7 @@ Put all research artifacts in the `raw-research/` directory. When you do your re
 
 ## Research Summary
 
-Modern slot machines rely on random number generators to determine the results of individual spins, which are independent from one another. The results are typically determined as soon as the play button is hit. Slot machines are designed to always give the house the better odds. There are multiple metrics to analyze the risk / potential payouts of a slot machine such as RTP and volatility.
+Modern slot machines rely on random number generators to determine the results of individual spins, which are determined as soon as the play button is hit. Slot machines are designed to always give the house the better odds, and there are multiple metrics to analyze the risk / potential payouts of a slot machine such as RTP and volatility.
 
 ## Member Contributions
 
