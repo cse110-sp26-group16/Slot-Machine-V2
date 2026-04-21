@@ -15,6 +15,9 @@ To avoid desync states and financial calculation errors, then we should treat th
 **Accessibility Considerations:**
 To ensure the game is inclusive, the design focuses on minimizing cognitive and physical barriers. This involves supporting reduced-motion modes to prevent discomfort from animations, ensuring all game actions are keyboard-accessible with clear focus states, and providing multi-modal feedback (combining text, color, and layout) so results aren't dependent on a single sensory cue. High color contrast and logical timing for transitions are also prioritized to maintain readability and ease of use.
 
+**Visual Themes:**
+The visual theme of a slot machine game plays a major role in both presentation and usability. From the images collected, the strongest designs consistently keep the reels as the main focus, use high contrast so symbols are easy to recognize, and maintain a unified style across the screen. A clear visual direction helps the game feel more polished and intentional instead of random or unfinished.
+
 ## Member Contributions
 
 ### Jordan
@@ -34,6 +37,8 @@ Research and documented technical edge cases and error states. Established an id
 ### Fariba
 
 ### Harvey
+
+Research visual theme and art direction for the slot machine, and collected and analyzed reference images showing strong reel-centered layouts, readable high-contrast symbols, and consistent themed interfaces such as pirate and fantasy styles. 
 
 ### Jenny
 Researched and documented accessibility standards for motion-heavy interfaces. Established guidelines for reduced-motion support, keyboard navigation, and multi-modal feedback systems to ensure the game remains usable for players with visual, motor, or cognitive impairments.
