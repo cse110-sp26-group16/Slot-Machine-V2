@@ -1,7 +1,9 @@
 # Research Topic: Sound Design References
 
-## The intricacies of Sound Design
+## The Intricacies of Sound Design
 More time and money is put into the sound and audio design of slot machine than the normal person may think. Due to the improvement of technology in the past decade or two, slot machines were able to evolve in order to provide a better visual and audio experience for the player
+
+
 In the current year, many slot machines are created in collaboration with a theme (i.e. a movie, TV series, video game, etc.) in which players can hear their favorite theme song or voice actor when winning in a slot machine. This is all intentional, audio engineers use these audios to keep the player entertained while playing the machine.
 
 
