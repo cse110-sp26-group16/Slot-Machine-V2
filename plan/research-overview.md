@@ -12,6 +12,9 @@ Modern slot machines rely on random number generators to determine the results o
 **Edge Cases & Error States:**
 To avoid desync states and financial calculation errors, then we should treat the slot machine as a **Strict Finite-State Machine (FSM). Some of the stuff I found is to differentiate game logic from UI/Animation timing so we can ensure that browser cosntraints does not affect the game. Make sure the transactions are atomic for every spin andw e are using integer-based currency. System is designed to be resilient against re-entrancy, race condition, and of course floating-point bugs.
 
+**Accessibility Considerations:**
+To ensure the game is inclusive, the design focuses on minimizing cognitive and physical barriers. This involves supporting reduced-motion modes to prevent discomfort from animations, ensuring all game actions are keyboard-accessible with clear focus states, and providing multi-modal feedback (combining text, color, and layout) so results aren't dependent on a single sensory cue. High color contrast and logical timing for transitions are also prioritized to maintain readability and ease of use.
+
 ## Member Contributions
 
 ### Jordan
@@ -33,6 +36,7 @@ Research and documented technical edge cases and error states. Established an id
 ### Harvey
 
 ### Jenny
+Researched and documented accessibility standards for motion-heavy interfaces. Established guidelines for reduced-motion support, keyboard navigation, and multi-modal feedback systems to ensure the game remains usable for players with visual, motor, or cognitive impairments.
 
 ### Koji
 
