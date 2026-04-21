@@ -6,7 +6,7 @@ Put all research artifacts in the `raw-research/` directory. When you do your re
 
 **Slot Machine Mechanics:**
 
-Modern slot machines rely on random number generators to determine the results of individual spins, which are determined as soon as the play button is hit. Games revolve around paylines, which are specific combinations where symbols need to match in order to have a payout. There are also special symbols such as wilds and scatters that change up the game and usually help the player. Slot machines are designed to always give the house the better odds, and there are multiple metrics to analyze the risk / potential payouts of a slot machine such as RTP and volatility. 
+Modern slot machines rely on random number generators to determine the results of individual spins. Games revolve around paylines, which are specific patterns where symbols must match for a payout. There are also special symbols such as wilds and scatters that change up the game and usually help the player. Slot machines are designed to always give the house the better odds, and there are multiple metrics to analyze the risk / potential payouts of a slot machine such as RTP and volatility. 
 
 ## Member Contributions
 
