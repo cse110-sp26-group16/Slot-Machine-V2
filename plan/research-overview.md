@@ -8,6 +8,8 @@ Put all research artifacts in the `raw-research/` directory. When you do your re
 
 Modern slot machines rely on random number generators to determine the results of individual spins. Games revolve around paylines, which are specific patterns where symbols must match for a payout. There are also special symbols such as wilds and scatters that change up the game and usually help the player. Slot machines are designed to always give the house the better odds, and there are multiple metrics to analyze the risk / potential payouts of a slot machine such as RTP and volatility. 
 
+**Wireframing & UI Sketching:**
+Structural planning focuses on defining the user journey through low-fidelity blueprints. By establishing a clear visual hierarchy and mapping out essential components, like the play area, dashboard, and action buttons, the design ensures intuitive navigation. This skeletal framework serves as a functional anchor for the project, allowing for rapid iteration of the layout before any visual styling or code implementation begins.
 
 **Edge Cases & Error States:**
 To avoid desync states and financial calculation errors, then we should treat the slot machine as a **Strict Finite-State Machine (FSM). Some of the stuff I found is to differentiate game logic from UI/Animation timing so we can ensure that browser cosntraints does not affect the game. Make sure the transactions are atomic for every spin andw e are using integer-based currency. System is designed to be resilient against re-entrancy, race condition, and of course floating-point bugs.
@@ -33,6 +35,8 @@ Researched slot machine mechanics and jargon, exploring how slot machines work, 
 Research and documented technical edge cases and error states. Established an idea for the FSM architecture as well as the protection protocols for re-entrancy to ensure the gameplay is consistent and the state is persistent in environmental mishaps.
 
 ### Bowen
+
+Researched wireframing and UI sketching methodologies, focusing on creating low-fidelity blueprints to map user journeys. Established a structural hierarchy for the slot interface and identified core components like the reels and dashboard to serve as a technical anchor for development.
 
 ### Fariba
 
