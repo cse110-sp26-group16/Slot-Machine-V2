@@ -12,6 +12,14 @@ The main task of an audio engineer who is working on a slot machine’s audio is
 
 Sound designers typically compose these audios in a key that is usually associated with happiness. In the early days of slot machines, lots of the music was composed in the key of C major, which is a key associated with happiness and positive feelings. In the current time, composers create these audios in a variety of keys with a high bpm (beats per minute) ranging from 120-140 bpm.
 
+In addition to the inner workings of a slot machine, an important part of the audio design is the location and number of speakers within a slot machine. A slot machine must compete with the audios of other slot machines and various sounds from within the slot machine as well, so the location of the speakers is crucial in keeping the player engaged. In the current day, some slot machines have surround sound seats, speakers in the chairs, and a subwoofer under the seat for vibrations, all to keep the player engaged.
+
+## The Psychology behind a Slot Machine’s Audio
+Another trick that audio engineers use to keep the player engaged and wanting to come back for more is **audio cues as feedback**. An example of an audio cue as feedback is the slots spinning and making a clicking sound or hitting a jackpot and an explosion of noise fills the air. Constant audio feedback allows the player to be fully engaged with the game.
+
+Audio engineers and composers use musical scales in their slot machines as well. When you play/hear a musical scale, the ending note is the resolution and makes the scale sound full and complete. Audio engineers use this psychology to play unresolved scales in the case that a player does not match all symbols. For example if a slot has 6 symbols and you get 5 out of 6 symbols, you are left without the final note in the scale, leaving the scale unresolved and your brain hungering for the satisfaction of hearing the full scale. This makes the player want to roll again in order to hear it. 
+
+
 
 
 
