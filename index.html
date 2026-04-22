@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Slot Machine</title>
+    <link rel="stylesheet" href="src/styles/main.css">
+</head>
+<body class="theme-ai-satire">
+    <main class="slot-machine">
+        <div class="reels">
+            <div class="reel">🤖</div>
+            <div class="reel">🧠</div>
+            <div class="reel">💾</div>
+            <div class="reel">💡</div>
+            <div class="reel">❓</div>
+            <div class="reel">🌀</div>
+            <div class="reel">⚡️</div>
+            <div class="reel">🔥</div>
+            <div class="reel">💎</div>
+        </div>
+        <div id="status-message" class="status-message" aria-live="polite"></div>
+    </main>
+
+    <aside class="dashboard">
+        <div class="dashboard-info">
+            <div class="dashboard-stat">
+                <span>Balance: <span id="balance">1000</span></span>
+            </div>
+            <div class="dashboard-stat">
+                <span>Bet: <span id="current-bet">10</span></span>
+            </div>
+            <div class="dashboard-stat">
+                <span>Last Win: <span id="last-win">0</span></span>
+            </div>
+        </div>
+        <div class="dashboard-actions">
+            <button type="button" id="spin-button" class="spin-button">Spin</button>
+            <button type="button" id="paytable-button" class="info-button">i</button>
+            <button type="button" id="mute-toggle" class="mute-button" aria-pressed="false">Mute</button>
+        </div>
+    </aside>
+
+    <script src="src/ui/main.js"></script>
+</body>
+</html>
