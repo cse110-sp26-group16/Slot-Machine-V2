@@ -28,7 +28,12 @@ Researched slot machine mechanics and jargon, exploring how slot machines work, 
 
 ### Yuval
 
+Researched **user personas for slot machine game design**, focusing on different player motivations and behavior patterns. Identified key user segments such as excitement seekers, relaxation-driven players, and casual social players. Translated these personas into design implications for the game, including the need for short gameplay loops, clear visual feedback, and shareable win moments. This research helps ensure the game design aligns with diverse user goals and engagement styles.
+
 ### Alec
+
+
+Researched **competitor analysis for slot machine games**, examining existing digital slot interfaces and common design patterns used in similar products. Identified key features across competitors such as bonus rounds, spin mechanics, reward animations, and user retention strategies. Also analyzed how different games balance visual complexity with usability, particularly in maintaining clear reel visibility while still using engaging themes and effects. This research informs design decisions by highlighting industry standards and opportunities for differentiation in our own implementation.
 
 ### Angelo
 
@@ -38,7 +43,12 @@ Research and documented technical edge cases and error states. Established an id
 
 Researched wireframing and UI sketching methodologies, focusing on creating low-fidelity blueprints to map user journeys. Established a structural hierarchy for the slot interface and identified core components like the reels and dashboard to serve as a technical anchor for development.
 
+
 ### Fariba
+
+Researched the **tech stack decisions for the slot machine project**, comparing **Vanilla JavaScript vs React/Vue** and **Canvas vs DOM-based rendering**. Found that Vanilla JavaScript is sufficient because the game logic is self-contained (spin, calculate results, update balance) and does not require a heavy framework. Concluded that React would add unnecessary complexity for this use case.
+
+Also evaluated rendering options and determined that a DOM-based approach is more suitable than Canvas, since the interface is driven by discrete UI state updates rather than continuous animations or real-time graphics.
 
 ### Harvey
 
@@ -49,4 +59,8 @@ Researched and documented accessibility standards for motion-heavy interfaces. E
 
 ### Koji
 
+Researched **animation and feedback patterns in slot machine games**, focusing on how motion and visual response are used to communicate game state changes. Analyzed common animation sequences such as reel spinning, easing transitions, symbol alignment, and win celebrations. Also examined feedback timing, including how quickly results are revealed after a spin and how layered effects (flash, shake, particle effects) reinforce perceived reward. This research helps guide how animations should clearly separate input (spin action) from outcome (result reveal), while keeping feedback visually engaging without overwhelming the user.
+
 ### Roy
+
+Researched **sound design references for slot machine games**, focusing on how audio is used to enhance player engagement and reinforce game feedback. Studied common practices such as win jingles, reel spin sounds, and layered audio effects that respond to gameplay events. Also analyzed how tempo, repetition, and sound variation are used to prevent fatigue while maintaining excitement. This research highlights how sound is tightly coupled with visual feedback to create a more immersive and responsive user experience.
