@@ -7,7 +7,12 @@
     <link rel="stylesheet" href="src/styles/main.css">
 </head>
 <body class="theme-ai-satire">
-    <button type="button" id="settings-button" class="settings-button" aria-label="Toggle Animations" aria-pressed="false">⚙️</button>
+    <div class="settings-container">
+        <button type="button" id="settings-button" class="settings-button" aria-label="Settings" aria-haspopup="true" aria-expanded="false">⚙️</button>
+        <div id="settings-menu" class="settings-menu" role="menu" hidden>
+            <button role="menuitem" id="toggle-animations-button" class="menu-button" aria-pressed="true">Toggle Animations</button>
+        </div>
+    </div>
 
     <div class="background-lights">
         <div class="light"></div>
@@ -20,6 +25,12 @@
             <div class="reel">🤖</div>
             <div class="reel">🧠</div>
             <div class="reel">💾</div>
+            <div class="reel">💡</div>
+            <div class="reel">⚙️</div>
+            <div class="reel">🔥</div>
+            <div class="reel">🌐</div>
+            <div class="reel">💸</div>
+            <div class="reel">📈</div>
         </div>
         <div id="status-message" class="status-message" aria-live="polite">Ready to Spin</div>
     </main>
@@ -42,6 +53,27 @@
             <button type="button" id="mute-toggle" class="mute-button" aria-pressed="false">Mute</button>
         </div>
     </aside>
+
+    <div id="info-modal" class="modal-overlay" hidden>
+        <div class="modal-content">
+            <button id="close-modal-button" class="close-button" aria-label="Close paytable">×</button>
+            <h2>Payout Table</h2>
+            <div id="paytable-content">
+                <p>Match three symbols on the center line to win.</p>
+                <ul>
+                    <li>🤖🤖🤖 - 50x Bet</li>
+                    <li>🧠🧠🧠 - 20x Bet</li>
+                    <li>💾💾💾 - 10x Bet</li>
+                    <li>💡💡💡 - 5x Bet</li>
+                    <li>⚙️⚙️⚙️ - 5x Bet</li>
+                    <li>🔥🔥🔥 - 2x Bet</li>
+                    <li>🌐🌐🌐 - 2x Bet</li>
+                    <li>💸💸💸 - 2x Bet</li>
+                    <li>📈📈📈 - 2x Bet</li>
+                </ul>
+            </div>
+        </div>
+    </div>
 
     <script src="src/ui/main.js"></script>
 </body>

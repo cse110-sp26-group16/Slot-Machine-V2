@@ -74,7 +74,7 @@ body.theme-ai-satire::before {
 
 .reels {
     display: grid;
-    grid-template-columns: repeat(3, 110px);
+    grid-template-columns: repeat(3, 1fr);
     grid-gap: 20px;
     border: 2px solid var(--border-color);
     padding: 25px;
@@ -170,7 +170,8 @@ body.theme-ai-satire::before {
 }
 
 .info-button,
-.mute-button {
+.mute-button,
+.menu-button {
     border: 1px solid var(--border-color);
     padding: 0.8rem 1.5rem;
     font-family: 'IBM Plex Mono', monospace;
@@ -187,7 +188,8 @@ body.theme-ai-satire::before {
 
 .spin-button:hover,
 .info-button:hover,
-.mute-button:hover {
+.mute-button:hover,
+.menu-button:hover {
     background-color: var(--accent);
     color: var(--background);
     box-shadow: 0 0 15px var(--accent);
@@ -205,11 +207,14 @@ body.theme-ai-satire::before {
     box-shadow: 0 0 15px var(--error-color);
 }
 
-.settings-button {
+.settings-container {
     position: fixed;
     top: 1.5rem;
     right: 1.5rem;
     z-index: 100;
+}
+
+.settings-button {
     width: 3.5rem;
     height: 3.5rem;
     padding: 0;
@@ -231,7 +236,7 @@ body.theme-ai-satire::before {
     box-shadow: 0 0 15px var(--accent);
 }
 
-.settings-button[aria-pressed="true"] {
+.settings-button[aria-expanded="true"] {
     transform: rotate(90deg);
     background-color: rgb(253 121 168 / 20%);
     border-color: var(--button-focus-ring);
@@ -239,12 +244,75 @@ body.theme-ai-satire::before {
     box-shadow: 0 0 15px var(--button-focus-ring);
 }
 
+.settings-menu {
+    position: absolute;
+    right: 0;
+    top: calc(100% + 10px);
+    background-color: var(--panel-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: 0 5px 15px rgb(0 0 0 / 30%);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.menu-button[aria-pressed="false"] {
+    background-color: var(--error-color);
+    border-color: var(--error-color);
+    color: #ffffff;
+}
+
 .spin-button:focus,
 .info-button:focus,
 .mute-button:focus,
-.settings-button:focus {
+.settings-button:focus,
+.menu-button:focus {
     outline: 3px solid var(--button-focus-ring);
     outline-offset: 4px;
+}
+
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background-color: rgb(0 0 0 / 75%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background: var(--panel-bg);
+    border: 2px solid var(--border-color);
+    border-radius: 15px;
+    padding: 3rem;
+    position: relative;
+    max-width: 500px;
+    width: 90%;
+    box-shadow: 0 0 30px rgb(0 206 201 / 40%);
+}
+
+.close-button {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    font-size: 2rem;
+    color: var(--text-color);
+    cursor: pointer;
+}
+
+#paytable-content ul {
+    list-style: none;
+    padding: 0;
+}
+
+#paytable-content li {
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
 }
 
 /* Background Lights (Keep but unify with animated background) */

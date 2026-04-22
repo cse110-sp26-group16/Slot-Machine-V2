@@ -3,33 +3,81 @@ document.addEventListener('DOMContentLoaded', () => {
     const spinButton = document.getElementById('spin-button');
     const paytableButton = document.getElementById('paytable-button');
     const settingsButton = document.getElementById('settings-button');
+    const infoModal = document.getElementById('info-modal');
+    const closeModalButton = document.getElementById('close-modal-button');
+    const settingsMenu = document.getElementById('settings-menu');
+    const toggleAnimationsButton = document.getElementById('toggle-animations-button');
     const body = document.body;
 
+    // Mute button functionality
     if (muteToggleButton) {
         muteToggleButton.addEventListener('click', () => {
             const isPressed = muteToggleButton.getAttribute('aria-pressed') === 'true';
-            muteToggleButton.setAttribute('aria-pressed', !isPressed);
-            console.log(`Mute toggled. New state: ${!isPressed ? 'muted' : 'unmuted'}`);
+            muteToggleButton.setAttribute('aria-pressed', String(!isPressed));
+            // Add actual mute/unmute logic here
         });
     }
 
-    if(spinButton) {
+    // Spin button functionality (placeholder)
+    if (spinButton) {
         spinButton.addEventListener('click', () => {
-            console.log('Spin button clicked.');
+            // Core game logic is not handled here
         });
     }
 
-    if(paytableButton) {
+    // Paytable modal functionality
+    if (paytableButton && infoModal && closeModalButton) {
         paytableButton.addEventListener('click', () => {
-            console.log('Paytable button clicked.');
+            infoModal.hidden = false;
+        });
+
+        closeModalButton.addEventListener('click', () => {
+            infoModal.hidden = true;
+        });
+
+        // Close modal if clicking outside the content area
+        infoModal.addEventListener('click', (event) => {
+            if (event.target === infoModal) {
+                infoModal.hidden = true;
+            }
         });
     }
 
-    if(settingsButton) {
+    // Settings menu functionality
+    if (settingsButton && settingsMenu) {
         settingsButton.addEventListener('click', () => {
-            const isDisabled = body.classList.toggle('animations-disabled');
-            settingsButton.setAttribute('aria-pressed', isDisabled);
-            console.log(`Animations ${isDisabled ? 'disabled' : 'enabled'}`);
+            const isExpanded = settingsButton.getAttribute('aria-expanded') === 'true';
+            settingsButton.setAttribute('aria-expanded', String(!isExpanded));
+            settingsMenu.hidden = isExpanded;
         });
     }
+
+    // Animation toggle functionality
+    if (toggleAnimationsButton) {
+        // Set initial state based on default (animations enabled)
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        let animationsEnabled = !prefersReducedMotion;
+
+        const updateAnimationState = () => {
+            body.classList.toggle('animations-disabled', !animationsEnabled);
+            toggleAnimationsButton.setAttribute('aria-pressed', String(animationsEnabled));
+        };
+
+        // Set initial state on load
+        updateAnimationState();
+
+        toggleAnimationsButton.addEventListener('click', () => {
+            animationsEnabled = !animationsEnabled;
+            updateAnimationState();
+        });
+    }
+
+    // Close settings menu if clicking outside
+    document.addEventListener('click', (event) => {
+        const isSettingsClick = settingsButton.contains(event.target) || settingsMenu.contains(event.target);
+        if (!isSettingsClick && !settingsMenu.hidden) {
+            settingsButton.setAttribute('aria-expanded', 'false');
+            settingsMenu.hidden = true;
+        }
+    });
 });
