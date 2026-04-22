@@ -52,7 +52,100 @@ Constraints (see GEMINI.md §Invariants 7 and plan/raw-research/ accessibility-c
 Goal: Create a layered, neon-themed background using gradients and subtle lighting effects that match the slot machine’s current theme. Avoid using static image backgrounds; instead, use CSS gradients, glow, and color transitions to create depth and atmosphere. Keep the glowing symbols on the slot machine. Make the balance, bet, and last win UIs more in theme as well.
 
 
-4. 
+4. The current background feels static and lacks visual depth. Refine the slot machine UI by adding subtle, continuous background animations that enhance the current theme (dystopian, making fun of AI)  without distracting from gameplay. 
+
+Files: index.html, src/styles/main.css, minimal updates to src/ui/main.js only if needed for class hooks. Do not add game logic.
+
+Constraints:
+Follow GEMINI.md §Invariants 7 and follow accessibility guidelines in plan/raw-research/accessibility-considerations-research.md
+All animations must be implemented using CSS 
+Animations must be subtle and low-distraction (no abrupt motion), animations can be slow to medium paced.
+
+Goals: 
+The background should be animated, a multi-colored gradient that is animated using slow transitions. Perhaps this is implemented by shifting the background
+
+Add soft, blurred radial light sources (e.g., cyan, purple, pink)
+Apply slow floating or drifting motion to create depth
+Make sure the slot machine itself is the focal point.
+Background animations must stay behind all UI elements 
+Avoid high contrast
+Create a setting button in the top right corner of the slot machine. This settings button will be able to disable or minimize animations if the user wants to. 
+
+5. The current UI implementation has multiple issues that must be corrected. Refine this slot machine to properly update the UI. The parameters are the following
+Files:
+1. Index.html
+2. src/styles/main.css
+3. src/ui/main.js (only if needed for positioning hooks; do not modify logic)
+Constraints:
+- Do NOT add or modify game logic
+- Follow GEMINI.md §Invariants 7
+- Follow accessibility guidelines in plan/raw-research/accessibility-considerations-research.md
+Issues to Fix:
+- Missing Background Animation:
+- The background is currently static
+- Implement a subtle animated neon gradient background using CSS (e.g., shifting background-position)
+- Animation must be smooth and slow 
+Missing Glow Effects:
+- UI elements lack neon glow styling asked for in the previous prompt
+- Add glow using box-shadow and/or text-shadow to: Slot machine container, Symbols, Buttons, Dashboard (balance, bet, last win)
+- Glow should be soft and consistent with the theme 
+Settings Button Position:
+- The settings (gear) icon is incorrectly positioned at the slot machine
+- It must be fixed to the top-right corner of the entire viewport (not the slot machine)
+- Use position: fixed with appropriate top/right spacing
+- Ensure it remains visible and clickable at all screen sizes
+Settings Button Functionality:
+- The settings control is currently non-functional
+- Ensure it is properly wired to existing event handlers 
+- Fix any missing class names, IDs, or any element that is preventing interaction
+Accessibility:
+- Add support for reduced motion:
+- Maintain sufficient contrast for all text and UI elements
+- Finally, always verify the html and css code to ensure no errors for the final product.
+
+  
+6. Refine the slot machine UI and controls to fix layout issues and improve user interaction.
+Files:
+
+1. index.html
+2. src/styles/main.css
+3. src/ui/main.js (UI behavior only; do not modify core game logic)
+
+Constraints:
+- Do NOT modify game logic or payout calculations
+- Follow GEMINI.md §Invariants 7
+- Maintain existing theme and styling consistency
+
+  
+Requirements:
+
+- Information Button:
+   - Update the “i” button to open a popup/modal overlay
+   - The popup must display a payout table and basic rules
+   - Include: Symbol combinations and their payouts, Brief explanation of how wins are determined (e.g., rows, matches)
+   - The popup must be centered on the screen, have a semi-transparent background, include a close button, and be fully accessible and readable.
+ 
+- Slot Grid Layout:
+  - Ensure the slot machine is displayed as a strict 3x3 grid
+  - All symbols must be evenly spaced and aligned
+  - Prevent layout breaking across screen sizes
+ 
+- Settings Button Behavior:
+   - Update the settings  button to open a menu instead of toggling animations directly
+   - The settings menu must: appear as a dropdown menu, include a toggle for animations, and animations must be enabled by default
+
+- All menus must open and close reliably, not inferfere with slot gameplay, and be layered correctly.
+
+
+
+
+Interaction & UX:
+All menus (info + settings) must:
+Open and close reliably
+Not interfere with gameplay controls
+Be layered correctly
+
+
 
 
 
