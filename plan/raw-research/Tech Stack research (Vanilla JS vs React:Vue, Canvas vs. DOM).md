@@ -7,8 +7,7 @@ Additionally, the AI agents we are using will have an easier time generating van
 **Canvas vs. DOM Elements:**
 
  Choosing between Canvas and DOM elements is important for performance. If we build the reels using standard HTML `<div>` elements, performance may suffer during fast animations. Each symbol becomes a separate DOM element that the browser must track. For example, 30–50 elements per reel across multiple reels could lead to lag. Canvas works differently. It uses a single element where everything is drawn programmatically, allowing smoother animations. The reels can run at 60 FPS more easily. However, Canvas is harder to work with. For example, click detection must be handled manually, while the DOM provides built-in event handling. Because of this, the best approach is to combine both. Use Canvas for the spinning reels and animations, and use standard HTML/CSS for UI elements such as buttons, balance display, and settings
-
-## Following is the recommended Tech Stack
+**Following is the recommended Tech Stack**
 
 *   Canvas for reels and spinning animations
 *   Standard HTML/CSS for UI elements
