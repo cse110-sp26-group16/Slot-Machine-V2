@@ -1,4 +1,17 @@
+import { createFsm } from '../game/fsm.js';
+import { createRng } from '../game/rng.js';
+import { evaluateGrid } from '../game/payline.js';
+import { drawGrid } from '../game/grid.js';
+
 document.addEventListener('DOMContentLoaded', () => {
+    // Game constants
+    const REEL_STRIPS = [
+        ['🤖', '🧠', '💾', '💡', '⚙️', '🔥', '🌐', '💸', '📈', '🤖', '🧠', '💾'],
+        ['💡', '⚙️', '🔥', '🌐', '💸', '📈', '🤖', '🧠', '💾', '💡', '⚙️', '🔥'],
+        ['🤖', '🧠', '💾', '💡', '⚙️', '🔥', '🌐', '💸', '📈', 'W', 'W', 'W'],
+    ];
+
+    // DOM Elements
     const muteToggleButton = document.getElementById('mute-toggle');
     const spinButton = document.getElementById('spin-button');
     const paytableButton = document.getElementById('paytable-button');
@@ -10,9 +23,20 @@ document.addEventListener('DOMContentLoaded', () => {
     const body = document.body;
     const balanceElement = document.getElementById('balance');
     const betElement = document.getElementById('current-bet');
+    const lastWinElement = document.getElementById('last-win');
     const reelsContainer = document.querySelector('.reels');
     const statusMessageElement = document.getElementById('status-message');
     const jackpotCounterElement = document.querySelector('#jackpot-counter span');
+    const winLoseMessageElement = document.getElementById('win-lose-message');
+
+    // Game State
+    const gameState = {
+        fsm: createFsm(),
+        balance: 1000,
+        bet: 10,
+        lastWin: 0,
+        rng: createRng(Date.now()),
+    };
 
     const lossMessages = [
         "My apologies, my training data appears to be biased towards paperclips.",
@@ -24,36 +48,59 @@ document.addEventListener('DOMContentLoaded', () => {
     ];
 
     /**
+     * Updates the balance display.
+     * @param {number} newBalance
+     */
+    function updateBalance(newBalance) {
+        gameState.balance = newBalance;
+        balanceElement.textContent = newBalance;
+        updateSpinButtonState();
+    }
+
+    /**
      * Updates the spin button's disabled state based on the current balance and bet.
      */
     function updateSpinButtonState() {
-        const balance = parseInt(balanceElement.textContent, 10);
-        const bet = parseInt(betElement.textContent, 10);
-        spinButton.disabled = balance < bet || reelsContainer.classList.contains('reels-spinning');
+        spinButton.disabled = !gameState.fsm.canModifyBet() || gameState.balance < gameState.bet;
     }
 
     /**
      * Handles the spin button click event.
      */
     function handleSpin() {
-        if (reelsContainer.classList.contains('reels-spinning')) {
-            return; // Already spinning
+        if (!gameState.fsm.canModifyBet() || gameState.balance < gameState.bet) {
+            return;
         }
 
+        winLoseMessageElement.textContent = '';
+        gameState.fsm.beginSpin();
+        updateBalance(gameState.balance - gameState.bet);
         reelsContainer.classList.add('reels-spinning');
         statusMessageElement.textContent = 'Spinning...';
-        spinButton.disabled = true;
+        updateSpinButtonState();
 
-        // Stop the spinning after a random duration
         setTimeout(() => {
-            reelsContainer.classList.remove('reels-spinning');
-            
-            // For now, assume a loss and show a witty message
-            const randomIndex = Math.floor(Math.random() * lossMessages.length);
-            statusMessageElement.textContent = lossMessages[randomIndex];
+            gameState.fsm.beginResolve();
+            const grid = drawGrid(REEL_STRIPS, gameState.rng);
+            const payout = evaluateGrid(grid) * gameState.bet;
 
-            updateSpinButtonState(); // Re-evaluate button state
-        }, 3000); // Spin for 3 seconds
+            reelsContainer.classList.remove('reels-spinning');
+
+            if (payout > 0) {
+                winLoseMessageElement.textContent = 'WIN';
+                gameState.lastWin = payout;
+                updateBalance(gameState.balance + payout);
+                lastWinElement.textContent = gameState.lastWin;
+                statusMessageElement.textContent = `WIN! +${payout}`;
+            } else {
+                winLoseMessageElement.textContent = 'LOSE';
+                const randomIndex = Math.floor(Math.random() * lossMessages.length);
+                statusMessageElement.textContent = lossMessages[randomIndex];
+            }
+
+            gameState.fsm.finishResolve();
+            updateSpinButtonState();
+        }, 3000);
     }
 
     /**
@@ -61,9 +108,25 @@ document.addEventListener('DOMContentLoaded', () => {
      */
     function updateJackpot() {
         let currentValue = parseInt(jackpotCounterElement.textContent.replace(/,/g, ''), 10);
-        const increment = Math.floor(Math.random() * 10) + 1;
+        const increment = Math.floor(Math.random() * 1000) + 500;
         currentValue += increment;
         jackpotCounterElement.textContent = currentValue.toLocaleString();
+    }
+
+    /**
+     * Handles bet adjustment.
+     * @param {number} amount
+     */
+    function adjustBet(amount) {
+        if (!gameState.fsm.canModifyBet()) {
+            return;
+        }
+        const newBet = gameState.bet + amount;
+        if (newBet >= 5) {
+            gameState.bet = newBet;
+            betElement.textContent = newBet;
+            updateSpinButtonState();
+        }
     }
 
     // Mute button functionality
@@ -73,6 +136,14 @@ document.addEventListener('DOMContentLoaded', () => {
             muteToggleButton.setAttribute('aria-pressed', String(!isPressed));
             // Add actual mute/unmute logic here
         });
+    }
+
+    // Bet adjustment functionality
+    const increaseBetButton = document.getElementById('increase-bet');
+    const decreaseBetButton = document.getElementById('decrease-bet');
+    if (increaseBetButton && decreaseBetButton) {
+        increaseBetButton.addEventListener('click', () => adjustBet(5));
+        decreaseBetButton.addEventListener('click', () => adjustBet(-5));
     }
 
     // Spin button functionality
@@ -136,16 +207,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Disable spin button if balance is too low
-    if (balanceElement && betElement && spinButton) {
-        const observer = new MutationObserver(updateSpinButtonState);
+    // Initial check
+    updateSpinButtonState();
 
-        observer.observe(balanceElement, { childList: true, subtree: true });
-        observer.observe(betElement, { childList: true, subtree: true });
-
-        // Initial check
-        updateSpinButtonState();
-    }
 
     // Initialize jackpot counter
     if (jackpotCounterElement) {
