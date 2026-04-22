@@ -20,7 +20,7 @@ How would this affect the script that we will give to the AI?
 
 We have to be specific in our prompts. For example, if we just say “build a slot machine,” the AI might default to React or make the reels out of divs. However, we could be more specific in our prompt, like: “Use vanilla JS. Render the reels on an HTML canvas element with requestAnimationFrame. All UI elements like buttons and balance display should be regular DOM elements outside the canvas”. Giving this prompt to AI would create the slot matching using our specific description.
 
-Work Cited:
+Referencs:
 
 “Canvas API.” _MDN Web Docs_, Mozilla, [https://developer.mozilla.org/en-US/docs/Web/API/Canvas\_API](https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API). Accessed 20 Apr. 2026.
 
