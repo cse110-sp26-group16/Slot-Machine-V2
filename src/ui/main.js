@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Paytable modal functionality
     if (paytableButton && infoModal && closeModalButton) {
         paytableButton.addEventListener('click', () => {
-            infoModal.hidden = false;
+            infoModal.hidden = !infoModal.hidden;
         });
 
         closeModalButton.addEventListener('click', () => {
@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
         settingsButton.addEventListener('click', () => {
             const isExpanded = settingsButton.getAttribute('aria-expanded') === 'true';
             settingsButton.setAttribute('aria-expanded', String(!isExpanded));
-            settingsMenu.hidden = isExpanded;
+            settingsMenu.hidden = !settingsMenu.hidden;
         });
     }
 

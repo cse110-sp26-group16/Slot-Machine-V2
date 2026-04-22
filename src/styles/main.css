@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Zen+Dots&display=swap');
 
 :root {
     --background: #0d0c1d;
@@ -54,6 +55,20 @@ body.theme-ai-satire::before {
     background-size: 100%, 100vw 3rem;
     z-index: -2;
     pointer-events: none;
+}
+
+.site-title {
+    font-family: 'Zen Dots', sans-serif;
+    text-align: center;
+    font-size: 3rem;
+    color: #ffffff;
+    text-shadow:
+        0 0 5px #ffffff,
+        0 0 10px #ffffff,
+        0 0 20px var(--accent),
+        0 0 40px var(--accent),
+        0 0 80px var(--accent);
+    margin-bottom: 2rem;
 }
 
 .slot-machine {
@@ -159,14 +174,18 @@ body.theme-ai-satire::before {
     border: 1px solid var(--secondary);
     color: #ffffff;
     font-size: 1.6rem;
-    padding: 1rem 3rem;
+    width: 120px;
+    height: 120px;
     font-family: 'IBM Plex Mono', monospace;
     font-weight: 700;
     cursor: pointer;
-    border-radius: 6px;
+    border-radius: 50%;
     transition: background-color 0.2s, box-shadow 0.2s, transform 0.1s;
     text-transform: uppercase;
     box-shadow: 0 0 15px rgb(108 92 231 / 40%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .info-button,
@@ -256,6 +275,10 @@ body.theme-ai-satire::before {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
+}
+
+[hidden] {
+    display: none !important;
 }
 
 .menu-button[aria-pressed="false"] {
