@@ -205,10 +205,103 @@ body.theme-ai-satire::after {
     text-shadow: 0 0 5px #fff;
 }
 
+.settings-button {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    width: 2.5rem;
+    height: 2.5rem;
+    padding: 0;
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--border-color);
+    background-color: transparent;
+    color: var(--accent);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.2s;
+}
+
+.settings-button:hover {
+    background-color: rgba(0, 206, 201, 0.2);
+}
+
+.settings-button[aria-pressed="true"] {
+    transform: rotate(90deg);
+    background-color: rgba(253, 121, 168, 0.3);
+}
+
+.background-lights {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: -3;
+}
+
+.light {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.2;
+    filter: blur(40px);
+    animation: float 25s infinite alternate;
+}
+
+.light:nth-child(1) {
+    width: 400px;
+    height: 400px;
+    top: 10vh;
+    left: 15vw;
+    background-color: var(--primary);
+    animation-duration: 28s;
+}
+
+.light:nth-child(2) {
+    width: 300px;
+    height: 300px;
+    top: 60vh;
+    left: 70vw;
+    background-color: var(--accent);
+    animation-duration: 22s;
+    animation-delay: -10s;
+}
+
+.light:nth-child(3) {
+    width: 250px;
+    height: 250px;
+    top: 40vh;
+    left: 40vw;
+    background-color: var(--button-focus-ring);
+    animation-duration: 35s;
+    animation-delay: -5s;
+}
+
+@keyframes float {
+    0% {
+        transform: translate(0, 0) scale(1);
+    }
+    100% {
+        transform: translate(calc(var(--x, 0) * 1vw), calc(var(--y, 0) * 1vh)) scale(1.2);
+    }
+}
+
+.light:nth-child(1) { --x: 10; --y: -15; }
+.light:nth-child(2) { --x: -15; --y: 10; }
+.light:nth-child(3) { --x: 5; --y: 5; }
+
+body.animations-disabled .light {
+    animation-play-state: paused;
+}
+
 
 @media (prefers-reduced-motion: reduce) {
     body.theme-ai-satire::before,
-    body.theme-ai-satire::after {
+    body.theme-ai-satire::after,
+    .light {
         animation: none;
     }
     .spin-button,
