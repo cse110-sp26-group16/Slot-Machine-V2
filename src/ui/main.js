@@ -3,7 +3,10 @@ import { createRng } from '../game/rng.js';
 import { evaluateGrid } from '../game/payline.js';
 import { drawGrid } from '../game/grid.js';
 
+console.log('main.js loaded successfully');
+
 document.addEventListener('DOMContentLoaded', () => {
+    console.log('DOM loaded, initializing game...');
     // Game constants
     const REEL_STRIPS = [
         ['🤖', '🧠', '💾', '💡', '⚙️', '🔥', '🌐', '💸', '📈', '🤖', '🧠', '💾'],
@@ -36,6 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
         bet: 10,
         lastWin: 0,
         rng: createRng(Date.now()),
+        currentSpinResult: null,
     };
 
     const lossMessages = [
@@ -67,24 +71,89 @@ document.addEventListener('DOMContentLoaded', () => {
     /**
      * Handles the spin button click event.
      */
+    function generateSpinningReels(reelStrip, finalGrid) {
+        const repeatedStrip = Array.from({ length: 30 }, () => reelStrip).flat();
+        for (let i = repeatedStrip.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [repeatedStrip[i], repeatedStrip[j]] = [repeatedStrip[j], repeatedStrip[i]];
+        }
+        return repeatedStrip.concat(finalGrid);
+    }
+
+    /**
+     * Handles the spin button click event.
+     */
+    let spinTimeout;
+
+    /**
+     * Handles the spin button click event.
+     */
     function handleSpin() {
+        console.log('handleSpin called', {
+            canModifyBet: gameState.fsm.canModifyBet(),
+            balance: gameState.balance,
+            bet: gameState.bet
+        });
+
         if (!gameState.fsm.canModifyBet() || gameState.balance < gameState.bet) {
+            console.log('Spin blocked - FSM state or insufficient balance');
             return;
         }
 
-        winLoseMessageElement.textContent = '';
-        gameState.fsm.beginSpin();
-        updateBalance(gameState.balance - gameState.bet);
-        reelsContainer.classList.add('reels-spinning');
-        statusMessageElement.textContent = 'Spinning...';
-        updateSpinButtonState();
+        try {
+            reelsContainer.classList.remove('reels-stopped');
+            winLoseMessageElement.textContent = '';
+            gameState.fsm.beginSpin();
+            updateBalance(gameState.balance - gameState.bet);
+            statusMessageElement.textContent = 'Spinning...';
+            updateSpinButtonState();
 
-        setTimeout(() => {
-            gameState.fsm.beginResolve();
             const grid = drawGrid(REEL_STRIPS, gameState.rng);
             const payout = evaluateGrid(grid) * gameState.bet;
+            gameState.currentSpinResult = { grid, payout };
+            console.log('Spin result calculated', { grid, payout });
 
+            const reelCols = reelsContainer.querySelectorAll('.reel-col');
+            reelCols.forEach((col, colIndex) => {
+                const finalGridCol = [grid[0][colIndex], grid[1][colIndex], grid[2][colIndex]];
+                const newReel = generateSpinningReels(REEL_STRIPS[colIndex], finalGridCol);
+                col.innerHTML = '';
+                newReel.forEach(symbol => {
+                    const reelElement = document.createElement('div');
+                    reelElement.className = 'reel';
+                    reelElement.textContent = symbol;
+                    col.appendChild(reelElement);
+                });
+
+                const reelHeight = 110;
+                const finalTranslateY = -(newReel.length - 3) * reelHeight;
+                col.style.transform = `translateY(${finalTranslateY}px)`;
+            });
+
+            // Start animation
+            reelsContainer.classList.add('reels-spinning');
+
+            const firstReel = reelsContainer.querySelector('.reel-col');
+            firstReel.addEventListener('transitionend', handleSpinEnd, { once: true });
+
+            spinTimeout = setTimeout(handleSpinEnd, 3000);
+        } catch (error) {
+            console.error('Error during spin:', error);
+        }
+    }
+
+    /**
+    * Handles the end of the spin animation and resolves the spin result.
+    */
+    function handleSpinEnd() {
+        console.log('handleSpinEnd called');
+        clearTimeout(spinTimeout);
+        try {
+            gameState.fsm.beginResolve();
             reelsContainer.classList.remove('reels-spinning');
+            reelsContainer.classList.add('reels-stopped');
+
+            const { payout } = gameState.currentSpinResult;
 
             if (payout > 0) {
                 winLoseMessageElement.textContent = 'WIN';
@@ -100,8 +169,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
             gameState.fsm.finishResolve();
             updateSpinButtonState();
-        }, 3000);
+            console.log('Spin completed successfully');
+        } catch (error) {
+            console.error('Error in handleSpinEnd:', error);
+        }
     }
+
 
     /**
      * Updates the jackpot counter with a random increment.
@@ -144,12 +217,37 @@ document.addEventListener('DOMContentLoaded', () => {
     if (increaseBetButton && decreaseBetButton) {
         increaseBetButton.addEventListener('click', () => adjustBet(5));
         decreaseBetButton.addEventListener('click', () => adjustBet(-5));
+
+        increaseBetButton.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                adjustBet(5);
+            }
+        });
+
+        decreaseBetButton.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                adjustBet(-5);
+            }
+        });
     }
 
     // Spin button functionality
     if (spinButton) {
+        console.log('Spin button found, attaching event listeners');
         spinButton.addEventListener('click', handleSpin);
+        spinButton.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                handleSpin();
+            }
+        });
+    } else {
+        console.error('Spin button not found in DOM!');
     }
+
+
 
     // Paytable modal functionality
     if (paytableButton && infoModal && closeModalButton) {

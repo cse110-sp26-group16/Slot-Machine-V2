@@ -132,31 +132,19 @@ body.theme-ai-satire::before {
 .reel-col {
   display: flex;
   flex-direction: column;
-  transition: transform 2.5s ease-out; /* Easing for the stop */
+  transform: translateY(0);
+  transition: transform 0s;
 }
 
 .reels-spinning .reel-col {
-  transform: translateY(calc(-100% + 110px));
-  animation: spin 0.5s linear infinite;
+  transition: transform 3s ease-out;
 }
 
-.reels-spinning .reel-col:nth-child(2) {
-  animation-delay: 0.2s;
-}
-
-.reels-spinning .reel-col:nth-child(3) {
-  animation-delay: 0.4s;
-}
-
-@keyframes spin {
-  from {
+.reels-stopped .reel-col {
     transform: translateY(0);
-  }
-
-  to {
-    transform: translateY(-100%);
-  }
+    transition: none;
 }
+
 
 .reel {
   width: 110px;
