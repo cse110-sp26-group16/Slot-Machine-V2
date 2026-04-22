@@ -3,29 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Slot Machine</title>
+    <title>Slot Machine - AI Satire Edition</title>
     <link rel="stylesheet" href="src/styles/main.css">
 </head>
 <body class="theme-ai-satire">
+    <button type="button" id="settings-button" class="settings-button" aria-label="Toggle Animations" aria-pressed="false">⚙️</button>
+
     <div class="background-lights">
         <div class="light"></div>
         <div class="light"></div>
         <div class="light"></div>
     </div>
+
     <main class="slot-machine">
-        <button type="button" id="settings-button" class="settings-button" aria-label="Toggle Animations" aria-pressed="false">⚙️</button>
         <div class="reels">
             <div class="reel">🤖</div>
             <div class="reel">🧠</div>
             <div class="reel">💾</div>
-            <div class="reel">💡</div>
-            <div class="reel">❓</div>
-            <div class="reel">🌀</div>
-            <div class="reel">⚡️</div>
-            <div class="reel">🔥</div>
-            <div class="reel">💎</div>
         </div>
-        <div id="status-message" class="status-message" aria-live="polite"></div>
+        <div id="status-message" class="status-message" aria-live="polite">Ready to Spin</div>
     </main>
 
     <aside class="dashboard">

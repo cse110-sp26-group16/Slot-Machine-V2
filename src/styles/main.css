@@ -5,10 +5,11 @@
     --primary: #6c5ce7;
     --secondary: #a29bfe;
     --accent: #00cec9;
-    --glow: 0 0 5px var(--accent), 0 0 10px var(--accent), 0 0 15px var(--accent);
-    --text-color: #dfe6e9;
-    --panel-bg: rgba(23, 28, 48, 0.7);
-    --border-color: rgba(0, 206, 201, 0.4);
+    --glow-color: rgb(0 206 201 / 60%);
+    --glow: 0 0 10px var(--glow-color), 0 0 20px var(--glow-color);
+    --text-color: #f0f3f5;
+    --panel-bg: rgb(23 28 48 / 85%);
+    --border-color: rgb(0 206 201 / 50%);
     --button-bg: var(--primary);
     --button-hover-bg: #8e44ad;
     --button-focus-ring: #fd79a8;
@@ -17,7 +18,10 @@
 
 body.theme-ai-satire {
     font-family: 'IBM Plex Mono', monospace;
+    background: linear-gradient(-45deg, #0d0c1d, #1a1a2e, #16213e, #0f3460);
     background-color: var(--background);
+    background-size: 400% 400%;
+    animation: gradient-bg 15s ease infinite;
     color: var(--text-color);
     display: flex;
     flex-direction: column;
@@ -29,88 +33,79 @@ body.theme-ai-satire {
     position: relative;
 }
 
+@keyframes gradient-bg {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
 body.theme-ai-satire::before {
     content: '';
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+    inset: 0;
     background-image:
-        radial-gradient(ellipse 80% 50% at 50% 0%, rgba(108, 92, 231, 0.2), transparent),
+        radial-gradient(ellipse 80% 50% at 50% 0%, rgb(108 92 231 / 15%), transparent),
         repeating-linear-gradient(
-            var(--background),
-            var(--background) 49.9%,
-            var(--border-color) 50%,
-            var(--background) 50.1%
+            transparent,
+            transparent 49.9%,
+            rgb(0 206 201 / 5%) 50%,
+            transparent 50.1%
         );
     background-size: 100%, 100vw 3rem;
     z-index: -2;
+    pointer-events: none;
 }
-
-body.theme-ai-satire::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-image: repeating-linear-gradient(
-        90deg,
-        transparent,
-        transparent 49.8%,
-        var(--accent) 50%,
-        transparent 50.2%
-    );
-    background-size: 20vw 100%;
-    z-index: -1;
-    opacity: 0.1;
-}
-
 
 .slot-machine {
-    padding: 2rem;
+    padding: 2.5rem;
     background: var(--panel-bg);
-    border: 1px solid var(--border-color);
-    border-radius: 10px;
-    box-shadow: 0 0 30px rgba(108, 92, 231, 0.3);
-    backdrop-filter: blur(10px);
+    border: 2px solid var(--border-color);
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgb(0 206 201 / 20%), 0 0 40px rgb(108 92 231 / 10%);
+    backdrop-filter: blur(12px);
     position: relative;
     z-index: 1;
+    transition: box-shadow 0.3s ease;
+}
+
+.slot-machine:hover {
+    box-shadow: 0 0 30px rgb(0 206 201 / 30%), 0 0 60px rgb(108 92 231 / 20%);
 }
 
 .reels {
     display: grid;
-    grid-template-columns: repeat(3, 100px);
-    grid-gap: 15px;
+    grid-template-columns: repeat(3, 110px);
+    grid-gap: 20px;
     border: 2px solid var(--border-color);
-    padding: 20px;
-    background-color: rgba(0,0,0,0.3);
-    border-radius: 5px;
+    padding: 25px;
+    background-color: rgb(0 0 0 / 40%);
+    border-radius: 8px;
+    box-shadow: inset 0 0 15px rgb(0 0 0 / 60%);
 }
 
 .reel {
-    width: 100px;
-    height: 100px;
-    background-color: var(--background);
-    border: 1px dashed var(--border-color);
+    width: 110px;
+    height: 110px;
+    background-color: #050510;
+    border: 1px solid var(--border-color);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 3.5rem;
+    font-size: 4rem;
     color: var(--accent);
-    text-shadow: var(--glow);
-    transition: transform 0.1s;
+    text-shadow: 0 0 10px var(--accent), 0 0 20px var(--accent);
+    border-radius: 4px;
+    transition: transform 0.1s, box-shadow 0.2s;
 }
 
 .status-message {
     text-align: center;
     min-height: 1.5em;
-    margin-top: 1.5rem;
-    font-size: 1.2rem;
+    margin-top: 2rem;
+    font-size: 1.3rem;
     font-weight: bold;
     color: var(--accent);
-    text-shadow: 0 0 5px var(--accent);
+    text-shadow: 0 0 8px var(--accent);
 }
 
 .dashboard {
@@ -118,33 +113,39 @@ body.theme-ai-satire::after {
     bottom: 0;
     left: 0;
     width: 100%;
-    background: linear-gradient(to top, rgba(13, 12, 29, 1) 30%, transparent);
+    background: linear-gradient(to top, rgb(13 12 29 / 95%) 60%, transparent);
     color: var(--text-color);
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1.5rem 3rem 2rem;
+    padding: 1.5rem 4rem 2.5rem;
     box-sizing: border-box;
-    z-index: 2;
+    z-index: 10;
 }
 
 .dashboard-info {
     display: flex;
-    gap: 1rem;
+    gap: 1.5rem;
 }
 
 .dashboard-stat {
-    background: rgba(0,0,0,0.4);
-    padding: 0.8rem 1.2rem;
-    border-radius: 5px;
+    background: rgb(0 0 0 / 50%);
+    padding: 0.8rem 1.5rem;
+    border-radius: 8px;
     border: 1px solid var(--border-color);
-    box-shadow: inset 0 0 5px rgba(0, 206, 201, 0.2);
+    box-shadow: 0 0 10px rgb(0 206 201 / 10%);
     text-align: center;
+    min-width: 120px;
 }
 
 .dashboard-stat span {
     font-size: 1.1rem;
     font-weight: 700;
+}
+
+.dashboard-stat span span {
+    color: var(--accent);
+    text-shadow: 0 0 5px var(--accent);
 }
 
 .dashboard-actions {
@@ -153,7 +154,21 @@ body.theme-ai-satire::after {
     gap: 1.5rem;
 }
 
-.spin-button,
+.spin-button {
+    background-color: var(--primary);
+    border: 1px solid var(--secondary);
+    color: #ffffff;
+    font-size: 1.6rem;
+    padding: 1rem 3rem;
+    font-family: 'IBM Plex Mono', monospace;
+    font-weight: 700;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: background-color 0.2s, box-shadow 0.2s, transform 0.1s;
+    text-transform: uppercase;
+    box-shadow: 0 0 15px rgb(108 92 231 / 40%);
+}
+
 .info-button,
 .mute-button {
     border: 1px solid var(--border-color);
@@ -162,11 +177,12 @@ body.theme-ai-satire::after {
     font-size: 1rem;
     font-weight: 700;
     cursor: pointer;
-    border-radius: 5px;
+    border-radius: 6px;
     transition: background-color 0.2s, box-shadow 0.2s, transform 0.1s;
-    background-color: transparent;
+    background-color: rgb(23 28 48 / 60%);
     color: var(--accent);
     text-transform: uppercase;
+    box-shadow: 0 0 5px rgb(0 206 201 / 20%);
 }
 
 .spin-button:hover,
@@ -174,65 +190,64 @@ body.theme-ai-satire::after {
 .mute-button:hover {
     background-color: var(--accent);
     color: var(--background);
-    box-shadow: var(--glow);
+    box-shadow: 0 0 15px var(--accent);
 }
 
-.spin-button {
-    background-color: var(--primary);
-    border-color: var(--secondary);
-    color: #fff;
-    font-size: 1.5rem;
-    padding: 1rem 2.5rem;
-    box-shadow: 0 0 15px var(--primary);
-}
-
-.spin-button:hover {
-    background-color: var(--button-hover-bg);
-    box-shadow: 0 0 25px var(--button-hover-bg);
-}
-
-.spin-button:focus,
-.info-button:focus,
-.mute-button:focus {
-    outline: 3px solid var(--button-focus-ring);
-    outline-offset: 3px;
+.spin-button:active {
+    transform: scale(0.98);
 }
 
 .mute-button[aria-pressed="true"] {
     background-color: var(--error-color);
     border-color: var(--error-color);
-    color: #fff;
-    text-shadow: 0 0 5px #fff;
+    color: #ffffff;
+    text-shadow: 0 0 5px #ffffff;
+    box-shadow: 0 0 15px var(--error-color);
 }
 
 .settings-button {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-    width: 2.5rem;
-    height: 2.5rem;
+    position: fixed;
+    top: 1.5rem;
+    right: 1.5rem;
+    z-index: 100;
+    width: 3.5rem;
+    height: 3.5rem;
     padding: 0;
-    font-size: 1.5rem;
+    font-size: 1.8rem;
     display: flex;
     align-items: center;
     justify-content: center;
     border: 1px solid var(--border-color);
-    background-color: transparent;
+    background-color: var(--panel-bg);
     color: var(--accent);
     border-radius: 50%;
     cursor: pointer;
-    transition: background-color 0.2s, transform 0.2s;
+    transition: background-color 0.2s, transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.2s;
+    box-shadow: 0 0 10px rgb(0 206 201 / 20%);
 }
 
 .settings-button:hover {
-    background-color: rgba(0, 206, 201, 0.2);
+    background-color: rgb(0 206 201 / 15%);
+    box-shadow: 0 0 15px var(--accent);
 }
 
 .settings-button[aria-pressed="true"] {
     transform: rotate(90deg);
-    background-color: rgba(253, 121, 168, 0.3);
+    background-color: rgb(253 121 168 / 20%);
+    border-color: var(--button-focus-ring);
+    color: var(--button-focus-ring);
+    box-shadow: 0 0 15px var(--button-focus-ring);
 }
 
+.spin-button:focus,
+.info-button:focus,
+.mute-button:focus,
+.settings-button:focus {
+    outline: 3px solid var(--button-focus-ring);
+    outline-offset: 4px;
+}
+
+/* Background Lights (Keep but unify with animated background) */
 .background-lights {
     position: absolute;
     top: 0;
@@ -241,73 +256,84 @@ body.theme-ai-satire::after {
     height: 100%;
     overflow: hidden;
     z-index: -3;
+    pointer-events: none;
 }
 
 .light {
     position: absolute;
     border-radius: 50%;
-    opacity: 0.2;
-    filter: blur(40px);
-    animation: float 25s infinite alternate;
-}
-
-.light:nth-child(1) {
-    width: 400px;
-    height: 400px;
-    top: 10vh;
-    left: 15vw;
-    background-color: var(--primary);
-    animation-duration: 28s;
-}
-
-.light:nth-child(2) {
-    width: 300px;
-    height: 300px;
-    top: 60vh;
-    left: 70vw;
-    background-color: var(--accent);
-    animation-duration: 22s;
-    animation-delay: -10s;
-}
-
-.light:nth-child(3) {
-    width: 250px;
-    height: 250px;
-    top: 40vh;
-    left: 40vw;
-    background-color: var(--button-focus-ring);
-    animation-duration: 35s;
-    animation-delay: -5s;
+    opacity: 0.25;
+    filter: blur(60px);
+    animation: float 25s infinite alternate ease-in-out;
 }
 
 @keyframes float {
-    0% {
-        transform: translate(0, 0) scale(1);
-    }
-    100% {
-        transform: translate(calc(var(--x, 0) * 1vw), calc(var(--y, 0) * 1vh)) scale(1.2);
-    }
+    0% { transform: translate(0, 0) scale(1); }
+    100% { transform: translate(calc(var(--x, 0) * 1vw), calc(var(--y, 0) * 1vh)) scale(1.3); }
 }
 
-.light:nth-child(1) { --x: 10; --y: -15; }
-.light:nth-child(2) { --x: -15; --y: 10; }
-.light:nth-child(3) { --x: 5; --y: 5; }
+.light:nth-child(1) {
+    width: 450px;
+    height: 450px;
+    top: -10vh;
+    left: 10vw;
+    background-color: var(--primary);
 
-body.animations-disabled .light {
-    animation-play-state: paused;
+    --x: 15;
+    --y: 20;
+
+    animation-duration: 30s;
 }
 
+.light:nth-child(2) {
+    width: 350px;
+    height: 350px;
+    bottom: -5vh;
+    right: 5vw;
+    background-color: var(--accent);
+
+    --x: -20;
+    --y: -15;
+
+    animation-duration: 25s;
+    animation-delay: -5s;
+}
+
+.light:nth-child(3) {
+    width: 300px;
+    height: 300px;
+    top: 40vh;
+    left: 40vw;
+    background-color: var(--button-focus-ring);
+
+    --x: 10;
+    --y: -10;
+
+    animation-duration: 35s;
+    animation-delay: -10s;
+}
+
+/* Accessibility & State overrides */
+body.animations-disabled,
+body.animations-disabled * {
+    animation: none !important;
+    transition: none !important;
+}
 
 @media (prefers-reduced-motion: reduce) {
-    body.theme-ai-satire::before,
-    body.theme-ai-satire::after,
-    .light {
-        animation: none;
-    }
+    body.theme-ai-satire,
+    .light,
     .spin-button,
-    .info-button,
-    .mute-button,
+    .settings-button,
     .reel {
-        transition: none;
+        animation: none !important;
+        transition: none !important;
     }
+}
+
+/* Ensure contrast for text */
+#balance,
+#current-bet,
+#last-win {
+    font-family: 'IBM Plex Mono', monospace;
 }
