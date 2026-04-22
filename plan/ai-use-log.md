@@ -1,5 +1,3 @@
-<img width="1512" height="859" alt="image" src="https://github.com/user-attachments/assets/62f2e806-ef9a-4a75-bc3c-d6d9523822d1" /># UI Prompt Log
-
 ## Entry 1: Original Prompt
 1. Files: index.html (new), src/ui/main.js (new), src/styles/main.css (new).
 
