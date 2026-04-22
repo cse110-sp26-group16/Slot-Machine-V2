@@ -1,5 +1,6 @@
 # UI Prompt Log
 
+## Entry 1: Original Prompt
 1. Files: index.html (new), src/ui/main.js (new), src/styles/main.css (new).
 
   Goal: the static skeleton of the slot machine UI. No game logic yet — just
@@ -31,7 +32,7 @@
   Why this first: D2 has a bootstrap problem — nothing to render logic over, and Playwright/unit tests both need DOM to exist. Shipping the
   skeleton first lets D3 write real E2E tests in their second prompt, and lets D2's own second prompt focus on wiring the actual spin flow.
 
-
+## Entry 2: First iteration
 
 2. 
 Refine the slot machine to be more in line with
@@ -42,6 +43,8 @@ Constraints (see GEMINI.md §Invariants 7 and plan/raw-research/ accessibility-c
 Take inspiration for the slot machine’s theme from plan/raw-research/competitor-analysis.md,
 plan/user-stories.md (specifically, story 4: Game Theme Feedback), and plan/raw-research/visual-themes-research.md. Make sure that the theme chosen is a single theme. Ensure all elements including the reel symbols, background, dashboard, buttons, and any other UI elements have the theme applied to it. DO NOT create animation visuals in relation to the theme just yet. Replace the question mark symbols with the themed symbols. Update typography to match the theme and improve readability. Preserve all accessibility requirements and ensure layout remains responsive and uncluttered  
 
+Entry 3: Second Iteration
+
 
 3. The slot machine background is too generic and does not imply a theme at all. Refine the slot machine by creating a more vibrant and eye-catching background. More details on how to refine the slot machine is written below in the “Goal” section. Refer to the theme created and the reference photos in plan/raw-research/visual-themes-research.md.
 
@@ -50,6 +53,8 @@ Files: index.html, src/styles/main.css, minimal updates to src/ui/main.js only i
 Constraints (see GEMINI.md §Invariants 7 and plan/raw-research/ accessibility-considerations-research.md). Ensure all elements including the reel symbols, background, dashboard, buttons, and any other UI elements have the theme applied to it
 
 Goal: Create a layered, neon-themed background using gradients and subtle lighting effects that match the slot machine’s current theme. Avoid using static image backgrounds; instead, use CSS gradients, glow, and color transitions to create depth and atmosphere. Keep the glowing symbols on the slot machine. Make the balance, bet, and last win UIs more in theme as well.
+
+## Entry 4: Third Iteration
 
 
 4. The current background feels static and lacks visual depth. Refine the slot machine UI by adding subtle, continuous background animations that enhance the current theme (dystopian, making fun of AI)  without distracting from gameplay. 
@@ -68,8 +73,10 @@ Add soft, blurred radial light sources (e.g., cyan, purple, pink)
 Apply slow floating or drifting motion to create depth
 Make sure the slot machine itself is the focal point.
 Background animations must stay behind all UI elements 
-Avoid high contrast
+Avoid high contrast 
 Create a setting button in the top right corner of the slot machine. This settings button will be able to disable or minimize animations if the user wants to. 
+
+## Entry 5: Fourth Iteration 
 
 5. The current UI implementation has multiple issues that must be corrected. Refine this slot machine to properly update the UI. The parameters are the following
 Files:
@@ -103,7 +110,9 @@ Accessibility:
 - Maintain sufficient contrast for all text and UI elements
 - Finally, always verify the html and css code to ensure no errors for the final product.
 
-  
+
+## Entry 6: Fifth Iteration
+
 6. Refine the slot machine UI and controls to fix layout issues and improve user interaction.
 Files:
 
@@ -136,14 +145,84 @@ Requirements:
 
 - All menus must open and close reliably, not inferfere with slot gameplay, and be layered correctly.
 
+- UX:
+  -  All menus (info + settings) must:
+  - Open and close reliably
+  - Not interfere with gameplay controls
+  - Be layered correctly
+ 
+
+## Entry 7: Iteration 6
+
+Our files will be index.html, src/styles/main.css, and src/ui/main.js 
+
+Constraints:
+Do NOT modify game logic or payout calculations, Follow GEMINI.md §Invariants 7, Ensure all UI interactions do not break gameplay functionality
+
+Goals:
+- Menu bug:
+  - The dropdown and paytable menus are open by default, users cannot close out of them.
+  - They must be closed on the initial page load
+  - Both menus must support reliable toggle behavior:
+    - Open on click, close on second click or close button
+    - Menus must not block or break slot machine functionality when toggled
+  - Create a site title
+    - This title will be a centered top header title
+    - Choose a font according to theme, make it neon-cyberpunk dystopian
+    - The title will be witty and satirical, making fun of AI.
+  -  Spin Button redesign
+    -  Instead of a rectangle, make the spin button a circle
+    -  It should visually resemble a physical slot machine “spin” button
+    -  Clear spin label on the inside of the circle
+    -  Must remain fully clickable and accessible
+
+  -  REMEMBER TO KEEP ALL ELEMENTS IN THEME.
+ 
+
+## Entry 8: Iteration 7
+
+Our files will be index.html, src/styles/main.css, and src/ui/main.js 
+
+Constraints:
+Do NOT modify game logic or payout calculations, Follow GEMINI.md §Invariants 7, Ensure all UI interactions do not break gameplay functionality
+
+Follow the suggestions that users want to see from plan/user-stories.md. 
+
+- Specifically, the SPIN button should be disabled when the player's current balance is lower than the bet to prevent negative balance state.
+Spinning animations
+
+ - Read plan/raw-research/animation-feedback-research.md and using the research done in this markdown file, implement animations that cater to the player and hold focus on the game
+We want player retention and to make the game fun.
+
+- Add witty and satirical text about AI when the player loses as well (suggestion from story 4 in user stories). 
+-Slot Machine features:
+  - add features and logic described in plan/raw-research/slot-machine-mechanics-research.m
+  - One feature that should be implemented is RTP, the RTP should be displayed above the slot machine.
+  - Add a jackpot counter on the left side of the screen that increments randomly every second.
+ 
+
+## Entry 9: Iteration 8
+
+Our files will be index.html, src/styles/main.css, and src/ui/main.js 
+
+Refine the slot machine by adding the following features below and fixing any bugs listed.
+
+Constraints:
+Do NOT modify game logic or payout calculations, Follow GEMINI.md §Invariants 7, Ensure all UI interactions do not break gameplay functionality
+
+- Since the box expands after spinning, put “WIN” or “LOSE” on the right side so the player knows whether or not they won. 
+- Move the information and MUTE buttons to the top right of the website as well, make these buttons to the left of the settings button. 
+- Additionally, properly count the current amount of tokens the player has, the balance is bugged and stuck at 1000 tokens. This should apply to the “Last Win” button as well.
+- For the “Bet” button, add an increase bet and decrease bet button on the right and left side of “Bet”. This should increase by 5. The increase and decrease buttons should be denoted as “+” and “-” and the buttons should   be small circles.
+- As the mute and information button is now in the top right corner of the website, increase the spin button’s size. 
+- Increase the jackpot increments by more, the starting value should be in the low 900,00s to the millions. 
 
 
 
-Interaction & UX:
-All menus (info + settings) must:
-Open and close reliably
-Not interfere with gameplay controls
-Be layered correctly
+
+
+
+
 
 
 
