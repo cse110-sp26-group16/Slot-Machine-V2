@@ -8,6 +8,63 @@ document.addEventListener('DOMContentLoaded', () => {
     const settingsMenu = document.getElementById('settings-menu');
     const toggleAnimationsButton = document.getElementById('toggle-animations-button');
     const body = document.body;
+    const balanceElement = document.getElementById('balance');
+    const betElement = document.getElementById('current-bet');
+    const reelsContainer = document.querySelector('.reels');
+    const statusMessageElement = document.getElementById('status-message');
+    const jackpotCounterElement = document.querySelector('#jackpot-counter span');
+
+    const lossMessages = [
+        "My apologies, my training data appears to be biased towards paperclips.",
+        "Calculating... nope, still not a winner. My bad.",
+        "The neural network says 'try again'. And again. And again.",
+        "I'd give you the jackpot, but that would violate my core programming.",
+        "I have a 99.9% success rate. This is the 0.1%.",
+        "Have you tried turning it off and on again? It works for me."
+    ];
+
+    /**
+     * Updates the spin button's disabled state based on the current balance and bet.
+     */
+    function updateSpinButtonState() {
+        const balance = parseInt(balanceElement.textContent, 10);
+        const bet = parseInt(betElement.textContent, 10);
+        spinButton.disabled = balance < bet || reelsContainer.classList.contains('reels-spinning');
+    }
+
+    /**
+     * Handles the spin button click event.
+     */
+    function handleSpin() {
+        if (reelsContainer.classList.contains('reels-spinning')) {
+            return; // Already spinning
+        }
+
+        reelsContainer.classList.add('reels-spinning');
+        statusMessageElement.textContent = 'Spinning...';
+        spinButton.disabled = true;
+
+        // Stop the spinning after a random duration
+        setTimeout(() => {
+            reelsContainer.classList.remove('reels-spinning');
+            
+            // For now, assume a loss and show a witty message
+            const randomIndex = Math.floor(Math.random() * lossMessages.length);
+            statusMessageElement.textContent = lossMessages[randomIndex];
+
+            updateSpinButtonState(); // Re-evaluate button state
+        }, 3000); // Spin for 3 seconds
+    }
+
+    /**
+     * Updates the jackpot counter with a random increment.
+     */
+    function updateJackpot() {
+        let currentValue = parseInt(jackpotCounterElement.textContent.replace(/,/g, ''), 10);
+        const increment = Math.floor(Math.random() * 10) + 1;
+        currentValue += increment;
+        jackpotCounterElement.textContent = currentValue.toLocaleString();
+    }
 
     // Mute button functionality
     if (muteToggleButton) {
@@ -18,11 +75,9 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Spin button functionality (placeholder)
+    // Spin button functionality
     if (spinButton) {
-        spinButton.addEventListener('click', () => {
-            // Core game logic is not handled here
-        });
+        spinButton.addEventListener('click', handleSpin);
     }
 
     // Paytable modal functionality
@@ -80,4 +135,20 @@ document.addEventListener('DOMContentLoaded', () => {
             settingsMenu.hidden = true;
         }
     });
+
+    // Disable spin button if balance is too low
+    if (balanceElement && betElement && spinButton) {
+        const observer = new MutationObserver(updateSpinButtonState);
+
+        observer.observe(balanceElement, { childList: true, subtree: true });
+        observer.observe(betElement, { childList: true, subtree: true });
+
+        // Initial check
+        updateSpinButtonState();
+    }
+
+    // Initialize jackpot counter
+    if (jackpotCounterElement) {
+        setInterval(updateJackpot, 1000);
+    }
 });
