@@ -1,8 +1,5 @@
 import { describe, it, expect } from 'vitest';
 import { createFsm } from '../../../src/game/fsm.js';
-import { drawGrid } from '../../../src/game/grid.js';
-import { evaluateGrid } from '../../../src/game/payline.js';
-import { createRng } from '../../../src/game/rng.js';
 /**
  * Test to ensure that the spin button  is disabled when a players balance 
  * cannot meet the bet size
