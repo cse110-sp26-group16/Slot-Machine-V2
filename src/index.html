@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Slot Machine - AI Satire Edition</title>
+    <link rel="stylesheet" href="styles/main.css">
+</head>
+<body class="theme-ai-satire">
+    <svg class="symbol-defs" aria-hidden="true" focusable="false" width="0" height="0">
+        <defs>
+            <symbol id="sym-ai" viewBox="0 0 100 100">
+                <rect x="28" y="32" width="44" height="42" rx="8" fill="none" stroke="currentColor" stroke-width="5"/>
+                <circle cx="40" cy="50" r="4.5" fill="currentColor"/>
+                <circle cx="60" cy="50" r="4.5" fill="currentColor"/>
+                <line x1="42" y1="64" x2="58" y2="64" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+                <line x1="50" y1="18" x2="50" y2="32" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+                <circle cx="50" cy="15" r="4" fill="currentColor"/>
+                <line x1="20" y1="50" x2="28" y2="50" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+                <line x1="72" y1="50" x2="80" y2="50" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+            </symbol>
+            <symbol id="sym-ml" viewBox="0 0 100 100">
+                <g stroke="currentColor" stroke-width="1.6" fill="none" opacity="0.55">
+                    <line x1="25" y1="30" x2="50" y2="25"/>
+                    <line x1="25" y1="30" x2="50" y2="50"/>
+                    <line x1="25" y1="30" x2="50" y2="75"/>
+                    <line x1="25" y1="50" x2="50" y2="25"/>
+                    <line x1="25" y1="50" x2="50" y2="50"/>
+                    <line x1="25" y1="50" x2="50" y2="75"/>
+                    <line x1="25" y1="70" x2="50" y2="25"/>
+                    <line x1="25" y1="70" x2="50" y2="50"/>
+                    <line x1="25" y1="70" x2="50" y2="75"/>
+                    <line x1="50" y1="25" x2="75" y2="40"/>
+                    <line x1="50" y1="25" x2="75" y2="60"/>
+                    <line x1="50" y1="50" x2="75" y2="40"/>
+                    <line x1="50" y1="50" x2="75" y2="60"/>
+                    <line x1="50" y1="75" x2="75" y2="40"/>
+                    <line x1="50" y1="75" x2="75" y2="60"/>
+                </g>
+                <g fill="currentColor">
+                    <circle cx="25" cy="30" r="5"/>
+                    <circle cx="25" cy="50" r="5"/>
+                    <circle cx="25" cy="70" r="5"/>
+                    <circle cx="50" cy="25" r="5"/>
+                    <circle cx="50" cy="50" r="5"/>
+                    <circle cx="50" cy="75" r="5"/>
+                    <circle cx="75" cy="40" r="5"/>
+                    <circle cx="75" cy="60" r="5"/>
+                </g>
+            </symbol>
+            <symbol id="sym-ram" viewBox="0 0 100 100">
+                <rect x="28" y="28" width="44" height="44" rx="4" fill="none" stroke="currentColor" stroke-width="4"/>
+                <rect x="40" y="40" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"/>
+                <g stroke="currentColor" stroke-width="3" stroke-linecap="round">
+                    <line x1="38" y1="20" x2="38" y2="28"/>
+                    <line x1="50" y1="20" x2="50" y2="28"/>
+                    <line x1="62" y1="20" x2="62" y2="28"/>
+                    <line x1="38" y1="72" x2="38" y2="80"/>
+                    <line x1="50" y1="72" x2="50" y2="80"/>
+                    <line x1="62" y1="72" x2="62" y2="80"/>
+                    <line x1="20" y1="38" x2="28" y2="38"/>
+                    <line x1="20" y1="50" x2="28" y2="50"/>
+                    <line x1="20" y1="62" x2="28" y2="62"/>
+                    <line x1="72" y1="38" x2="80" y2="38"/>
+                    <line x1="72" y1="50" x2="80" y2="50"/>
+                    <line x1="72" y1="62" x2="80" y2="62"/>
+                </g>
+            </symbol>
+            <symbol id="sym-ide" viewBox="0 0 100 100">
+                <path d="M 50 18 Q 32 18 32 38 Q 32 52 42 60 L 42 70 L 58 70 L 58 60 Q 68 52 68 38 Q 68 18 50 18 Z" fill="none" stroke="currentColor" stroke-width="4" stroke-linejoin="round"/>
+                <line x1="43" y1="76" x2="57" y2="76" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+                <line x1="45" y1="82" x2="55" y2="82" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+                <g stroke="currentColor" stroke-width="3" stroke-linecap="round">
+                    <line x1="50" y1="8" x2="50" y2="14"/>
+                    <line x1="20" y1="38" x2="26" y2="38"/>
+                    <line x1="74" y1="38" x2="80" y2="38"/>
+                    <line x1="24" y1="20" x2="28" y2="24"/>
+                    <line x1="76" y1="20" x2="72" y2="24"/>
+                </g>
+            </symbol>
+            <symbol id="sym-sys" viewBox="0 0 100 100">
+                <circle cx="50" cy="50" r="18" fill="none" stroke="currentColor" stroke-width="4"/>
+                <circle cx="50" cy="50" r="7" fill="none" stroke="currentColor" stroke-width="3"/>
+                <g stroke="currentColor" stroke-width="6" stroke-linecap="round">
+                    <line x1="50" y1="18" x2="50" y2="30"/>
+                    <line x1="50" y1="70" x2="50" y2="82"/>
+                    <line x1="18" y1="50" x2="30" y2="50"/>
+                    <line x1="70" y1="50" x2="82" y2="50"/>
+                    <line x1="27" y1="27" x2="35" y2="35"/>
+                    <line x1="65" y1="65" x2="73" y2="73"/>
+                    <line x1="73" y1="27" x2="65" y2="35"/>
+                    <line x1="27" y1="73" x2="35" y2="65"/>
+                </g>
+            </symbol>
+            <symbol id="sym-gpu" viewBox="0 0 100 100">
+                <path d="M 50 14 Q 38 28 40 42 Q 34 38 30 48 Q 26 62 32 74 Q 40 84 50 86 Q 60 84 68 74 Q 74 62 70 48 Q 66 38 60 42 Q 62 28 50 14 Z" fill="none" stroke="currentColor" stroke-width="4" stroke-linejoin="round"/>
+                <path d="M 50 50 Q 42 58 42 68 Q 42 78 50 82 Q 58 78 58 68 Q 58 58 50 50 Z" fill="currentColor" opacity="0.35"/>
+            </symbol>
+            <symbol id="sym-net" viewBox="0 0 100 100">
+                <circle cx="50" cy="50" r="30" fill="none" stroke="currentColor" stroke-width="4"/>
+                <line x1="20" y1="50" x2="80" y2="50" stroke="currentColor" stroke-width="3"/>
+                <ellipse cx="50" cy="50" rx="12" ry="30" fill="none" stroke="currentColor" stroke-width="3"/>
+                <line x1="50" y1="20" x2="50" y2="80" stroke="currentColor" stroke-width="3"/>
+                <path d="M 22 38 Q 50 32 78 38" fill="none" stroke="currentColor" stroke-width="2" opacity="0.7"/>
+                <path d="M 22 62 Q 50 68 78 62" fill="none" stroke="currentColor" stroke-width="2" opacity="0.7"/>
+            </symbol>
+            <symbol id="sym-btc" viewBox="0 0 100 100">
+                <circle cx="50" cy="50" r="30" fill="none" stroke="currentColor" stroke-width="5"/>
+                <circle cx="50" cy="50" r="24" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.7"/>
+                <path d="M 50 32 L 50 68 M 42 40 Q 42 34 50 34 L 56 34 Q 62 34 62 42 Q 62 48 54 48 L 46 48 Q 38 48 38 56 Q 38 64 46 64 L 54 64 Q 62 64 62 58" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+            </symbol>
+            <symbol id="sym-roi" viewBox="0 0 100 100">
+                <line x1="22" y1="22" x2="22" y2="78" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+                <line x1="22" y1="78" x2="82" y2="78" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+                <polyline points="30,66 44,56 54,62 70,38" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                <polyline points="62,38 72,38 72,48" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+            </symbol>
+            <symbol id="sym-w" viewBox="0 0 100 100">
+                <polygon points="50,14 60,40 86,40 64,56 72,82 50,66 28,82 36,56 14,40 40,40" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+            </symbol>
+        </defs>
+    </svg>
+
+    <div class="settings-container">
+        <button type="button" id="paytable-button" class="info-button">i</button>
+        <button type="button" id="mute-toggle" class="mute-button" aria-pressed="false">Mute</button>
+        <button type="button" id="settings-button" class="settings-button" aria-label="Settings" aria-haspopup="true" aria-expanded="false">Menu</button>
+        <div id="settings-menu" class="settings-menu" role="menu" hidden>
+            <button role="menuitem" id="toggle-animations-button" class="menu-button" aria-pressed="true">Toggle Animations</button>
+        </div>
+    </div>
+
+    <div class="background-lights">
+        <div class="light"></div>
+        <div class="light"></div>
+        <div class="light"></div>
+    </div>
+
+    <aside class="dashboard">
+        <header class="dashboard-header">
+            <h1 class="dashboard-title">Sentient Slots</h1>
+            <p class="dashboard-subtitle">More Fun Than Paperclips</p>
+        </header>
+        <div class="dashboard-stat dashboard-stat--highlight">
+            <span class="dashboard-label">Jackpot</span>
+            <span class="dashboard-value" id="jackpot-counter"><span>987654</span></span>
+        </div>
+        <div class="dashboard-stat">
+            <span class="dashboard-label">RTP</span>
+            <span class="dashboard-value" id="rtp-display">96%</span>
+        </div>
+        <div class="dashboard-stat">
+            <span class="dashboard-label">Balance</span>
+            <span class="dashboard-value"><span id="balance">1000</span></span>
+        </div>
+        <div class="dashboard-stat bet-control">
+            <span class="dashboard-label">Bet</span>
+            <div class="bet-control-row">
+                <button type="button" id="decrease-bet" class="bet-adjust-button" aria-label="Decrease bet by 5" tabindex="0">−</button>
+                <span class="dashboard-value"><span id="current-bet">10</span></span>
+                <button type="button" id="increase-bet" class="bet-adjust-button" aria-label="Increase bet by 5" tabindex="0">+</button>
+            </div>
+        </div>
+        <div class="dashboard-stat">
+            <span class="dashboard-label">Last Win</span>
+            <span class="dashboard-value"><span id="last-win">0</span></span>
+        </div>
+    </aside>
+
+    <main class="slot-machine">
+        <div id="win-lose-message" class="win-lose-message" aria-live="polite"></div>
+        <div class="slot-machine-body">
+            <div class="reels">
+                <div class="reel-col">
+                    <div class="reel"><svg class="reel-icon" viewBox="0 0 100 100"><use href="#sym-ai"/></svg></div>
+                    <div class="reel"><svg class="reel-icon" viewBox="0 0 100 100"><use href="#sym-ml"/></svg></div>
+                    <div class="reel"><svg class="reel-icon" viewBox="0 0 100 100"><use href="#sym-ram"/></svg></div>
+                    <div class="reel"><svg class="reel-icon" viewBox="0 0 100 100"><use href="#sym-ide"/></svg></div>
+                    <div class="reel"><svg class="reel-icon" viewBox="0 0 100 100"><use href="#sym-sys"/></svg></div>
+                    <div class="reel"><svg class="reel-icon" viewBox="0 0 100 100"><use href="#sym-gpu"/></svg></div>
+                    <div class="reel"><svg class="reel-icon" viewBox="0 0 100 100"><use href="#sym-net"/></svg></div>
+                    <div class="reel"><svg class="reel-icon" viewBox="0 0 100 100"><use href="#sym-btc"/></svg></div>
+                    <div class="reel"><svg class="reel-icon" viewBox="0 0 100 100"><use href="#sym-roi"/></svg></div>
+                </div>
+                <div class="reel-col">
+                    <div class="reel"><svg class="reel-icon" viewBox="0 0 100 100"><use href="#sym-ai"/></svg></div>
+                    <div class="reel"><svg class="reel-icon" viewBox="0 0 100 100"><use href="#sym-ml"/></svg></div>
+                    <div class="reel"><svg class="reel-icon" viewBox="0 0 100 100"><use href="#sym-ram"/></svg></div>
+                    <div class="reel"><svg class="reel-icon" viewBox="0 0 100 100"><use href="#sym-ide"/></svg></div>
+                    <div class="reel"><svg class="reel-icon" viewBox="0 0 100 100"><use href="#sym-sys"/></svg></div>
+                    <div class="reel"><svg class="reel-icon" viewBox="0 0 100 100"><use href="#sym-gpu"/></svg></div>
+                    <div class="reel"><svg class="reel-icon" viewBox="0 0 100 100"><use href="#sym-net"/></svg></div>
+                    <div class="reel"><svg class="reel-icon" viewBox="0 0 100 100"><use href="#sym-btc"/></svg></div>
+                    <div class="reel"><svg class="reel-icon" viewBox="0 0 100 100"><use href="#sym-roi"/></svg></div>
+                </div>
+                <div class="reel-col">
+                    <div class="reel"><svg class="reel-icon" viewBox="0 0 100 100"><use href="#sym-ai"/></svg></div>
+                    <div class="reel"><svg class="reel-icon" viewBox="0 0 100 100"><use href="#sym-ml"/></svg></div>
+                    <div class="reel"><svg class="reel-icon" viewBox="0 0 100 100"><use href="#sym-ram"/></svg></div>
+                    <div class="reel"><svg class="reel-icon" viewBox="0 0 100 100"><use href="#sym-ide"/></svg></div>
+                    <div class="reel"><svg class="reel-icon" viewBox="0 0 100 100"><use href="#sym-sys"/></svg></div>
+                    <div class="reel"><svg class="reel-icon" viewBox="0 0 100 100"><use href="#sym-gpu"/></svg></div>
+                    <div class="reel"><svg class="reel-icon" viewBox="0 0 100 100"><use href="#sym-net"/></svg></div>
+                    <div class="reel"><svg class="reel-icon" viewBox="0 0 100 100"><use href="#sym-btc"/></svg></div>
+                    <div class="reel"><svg class="reel-icon" viewBox="0 0 100 100"><use href="#sym-roi"/></svg></div>
+                </div>
+            </div>
+            <div class="lever-assembly">
+                <div class="lever-mount" aria-hidden="true"></div>
+                <div class="lever-track" id="lever-track">
+                    <div class="lever-rod" aria-hidden="true"></div>
+                    <div
+                        id="spin-lever"
+                        class="lever-handle"
+                        role="button"
+                        tabindex="0"
+                        aria-label="Pull lever down to spin"
+                        aria-disabled="false"
+                    >
+                        <span class="lever-ball"></span>
+                    </div>
+                </div>
+                <p class="lever-hint">Pull to spin</p>
+            </div>
+        </div>
+        <div id="status-message" class="status-message" aria-live="polite">Ready to Spin</div>
+    </main>
+
+    <div id="info-modal" class="modal-overlay" hidden>
+        <div class="modal-content">
+            <button id="close-modal-button" class="close-button" aria-label="Close paytable">×</button>
+            <h2>Payout Table</h2>
+            <div id="paytable-content">
+                <p>Match three symbols on the center line to win.</p>
+                <ul>
+                    <li>
+                        <span class="paytable-row">
+                            <svg class="paytable-icon" viewBox="0 0 100 100"><use href="#sym-ai"/></svg>
+                            <svg class="paytable-icon" viewBox="0 0 100 100"><use href="#sym-ai"/></svg>
+                            <svg class="paytable-icon" viewBox="0 0 100 100"><use href="#sym-ai"/></svg>
+                        </span>
+                        <span class="paytable-payout">50× Bet</span>
+                    </li>
+                    <li>
+                        <span class="paytable-row">
+                            <svg class="paytable-icon" viewBox="0 0 100 100"><use href="#sym-ml"/></svg>
+                            <svg class="paytable-icon" viewBox="0 0 100 100"><use href="#sym-ml"/></svg>
+                            <svg class="paytable-icon" viewBox="0 0 100 100"><use href="#sym-ml"/></svg>
+                        </span>
+                        <span class="paytable-payout">20× Bet</span>
+                    </li>
+                    <li>
+                        <span class="paytable-row">
+                            <svg class="paytable-icon" viewBox="0 0 100 100"><use href="#sym-ram"/></svg>
+                            <svg class="paytable-icon" viewBox="0 0 100 100"><use href="#sym-ram"/></svg>
+                            <svg class="paytable-icon" viewBox="0 0 100 100"><use href="#sym-ram"/></svg>
+                        </span>
+                        <span class="paytable-payout">10× Bet</span>
+                    </li>
+                    <li>
+                        <span class="paytable-row">
+                            <svg class="paytable-icon" viewBox="0 0 100 100"><use href="#sym-ide"/></svg>
+                            <svg class="paytable-icon" viewBox="0 0 100 100"><use href="#sym-ide"/></svg>
+                            <svg class="paytable-icon" viewBox="0 0 100 100"><use href="#sym-ide"/></svg>
+                        </span>
+                        <span class="paytable-payout">5× Bet</span>
+                    </li>
+                    <li>
+                        <span class="paytable-row">
+                            <svg class="paytable-icon" viewBox="0 0 100 100"><use href="#sym-sys"/></svg>
+                            <svg class="paytable-icon" viewBox="0 0 100 100"><use href="#sym-sys"/></svg>
+                            <svg class="paytable-icon" viewBox="0 0 100 100"><use href="#sym-sys"/></svg>
+                        </span>
+                        <span class="paytable-payout">5× Bet</span>
+                    </li>
+                    <li>
+                        <span class="paytable-row">
+                            <svg class="paytable-icon" viewBox="0 0 100 100"><use href="#sym-gpu"/></svg>
+                            <svg class="paytable-icon" viewBox="0 0 100 100"><use href="#sym-gpu"/></svg>
+                            <svg class="paytable-icon" viewBox="0 0 100 100"><use href="#sym-gpu"/></svg>
+                        </span>
+                        <span class="paytable-payout">2× Bet</span>
+                    </li>
+                    <li>
+                        <span class="paytable-row">
+                            <svg class="paytable-icon" viewBox="0 0 100 100"><use href="#sym-net"/></svg>
+                            <svg class="paytable-icon" viewBox="0 0 100 100"><use href="#sym-net"/></svg>
+                            <svg class="paytable-icon" viewBox="0 0 100 100"><use href="#sym-net"/></svg>
+                        </span>
+                        <span class="paytable-payout">2× Bet</span>
+                    </li>
+                    <li>
+                        <span class="paytable-row">
+                            <svg class="paytable-icon" viewBox="0 0 100 100"><use href="#sym-btc"/></svg>
+                            <svg class="paytable-icon" viewBox="0 0 100 100"><use href="#sym-btc"/></svg>
+                            <svg class="paytable-icon" viewBox="0 0 100 100"><use href="#sym-btc"/></svg>
+                        </span>
+                        <span class="paytable-payout">2× Bet</span>
+                    </li>
+                    <li>
+                        <span class="paytable-row">
+                            <svg class="paytable-icon" viewBox="0 0 100 100"><use href="#sym-roi"/></svg>
+                            <svg class="paytable-icon" viewBox="0 0 100 100"><use href="#sym-roi"/></svg>
+                            <svg class="paytable-icon" viewBox="0 0 100 100"><use href="#sym-roi"/></svg>
+                        </span>
+                        <span class="paytable-payout">2× Bet</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script src="ui/main.js" type="module"></script>
+</body>
+</html>

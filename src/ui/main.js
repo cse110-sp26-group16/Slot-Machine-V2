@@ -3,20 +3,37 @@ import { createRng } from '../game/rng.js';
 import { evaluateGrid } from '../game/payline.js';
 import { drawGrid } from '../game/grid.js';
 
-console.log('main.js loaded successfully');
-
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('DOM loaded, initializing game...');
     // Game constants
     const REEL_STRIPS = [
-        ['🤖', '🧠', '💾', '💡', '⚙️', '🔥', '🌐', '💸', '📈', '🤖', '🧠', '💾'],
-        ['💡', '⚙️', '🔥', '🌐', '💸', '📈', '🤖', '🧠', '💾', '💡', '⚙️', '🔥'],
-        ['🤖', '🧠', '💾', '💡', '⚙️', '🔥', '🌐', '💸', '📈', 'W', 'W', 'W'],
+        ['AI', 'ML', 'RAM', 'IDE', 'SYS', 'GPU', 'NET', 'BTC', 'ROI', 'AI', 'ML', 'RAM'],
+        ['IDE', 'SYS', 'GPU', 'NET', 'BTC', 'ROI', 'AI', 'ML', 'RAM', 'IDE', 'SYS', 'GPU'],
+        ['AI', 'ML', 'RAM', 'IDE', 'SYS', 'GPU', 'NET', 'BTC', 'ROI', 'W', 'W', 'W'],
     ];
+    const SVG_NS = 'http://www.w3.org/2000/svg';
+
+    /**
+     * Build a single reel tile containing an SVG icon referencing the sprite sheet.
+     * @param {string} symbol
+     * @returns {HTMLDivElement}
+     */
+    function createReelElement(symbol) {
+        const reel = document.createElement('div');
+        reel.className = 'reel';
+        const svg = document.createElementNS(SVG_NS, 'svg');
+        svg.setAttribute('class', 'reel-icon');
+        svg.setAttribute('viewBox', '0 0 100 100');
+        const use = document.createElementNS(SVG_NS, 'use');
+        use.setAttribute('href', `#sym-${symbol.toLowerCase()}`);
+        svg.appendChild(use);
+        reel.appendChild(svg);
+        return reel;
+    }
 
     // DOM Elements
     const muteToggleButton = document.getElementById('mute-toggle');
-    const spinButton = document.getElementById('spin-button');
+    const leverHandle = document.getElementById('spin-lever');
+    const leverTrack = document.getElementById('lever-track');
     const paytableButton = document.getElementById('paytable-button');
     const settingsButton = document.getElementById('settings-button');
     const infoModal = document.getElementById('info-modal');
@@ -58,14 +75,23 @@ document.addEventListener('DOMContentLoaded', () => {
     function updateBalance(newBalance) {
         gameState.balance = newBalance;
         balanceElement.textContent = newBalance;
-        updateSpinButtonState();
+        updateLeverState();
     }
 
     /**
-     * Updates the spin button's disabled state based on the current balance and bet.
+     * Returns whether the lever can currently be pulled.
+     * @returns {boolean}
      */
-    function updateSpinButtonState() {
-        spinButton.disabled = !gameState.fsm.canModifyBet() || gameState.balance < gameState.bet;
+    function canPullLever() {
+        return gameState.fsm.canModifyBet() && gameState.balance >= gameState.bet;
+    }
+
+    /**
+     * Updates the lever's disabled state based on the current balance and bet.
+     */
+    function updateLeverState() {
+        if (!leverHandle) {return;}
+        leverHandle.setAttribute('aria-disabled', String(!canPullLever()));
     }
 
     /**
@@ -89,121 +115,99 @@ document.addEventListener('DOMContentLoaded', () => {
      * Handles the spin button click event.
      */
     function handleSpin() {
-        console.log('handleSpin called', {
-            canModifyBet: gameState.fsm.canModifyBet(),
-            balance: gameState.balance,
-            bet: gameState.bet
-        });
-
         if (!gameState.fsm.canModifyBet() || gameState.balance < gameState.bet) {
-            console.log('Spin blocked - FSM state or insufficient balance');
             return;
         }
 
-        try {
-            reelsContainer.classList.remove('reels-stopped');
-            winLoseMessageElement.textContent = '';
-            gameState.fsm.beginSpin();
-            updateBalance(gameState.balance - gameState.bet);
-            statusMessageElement.textContent = 'Spinning...';
-            updateSpinButtonState();
+        reelsContainer.classList.remove('reels-stopped');
+        winLoseMessageElement.textContent = '';
+        gameState.fsm.beginSpin();
+        updateBalance(gameState.balance - gameState.bet);
+        statusMessageElement.textContent = 'Spinning...';
+        updateLeverState();
 
-            const grid = drawGrid(REEL_STRIPS, gameState.rng);
-            const payout = evaluateGrid(grid) * gameState.bet;
-            gameState.currentSpinResult = { grid, payout };
-            console.log('Spin result calculated', { grid, payout });
+        const grid = drawGrid(REEL_STRIPS, gameState.rng);
+        const payout = evaluateGrid(grid) * gameState.bet;
+        gameState.currentSpinResult = { grid, payout };
 
-            const reelCols = reelsContainer.querySelectorAll('.reel-col');
-            const reelHeight = 110;
-            const reelsData = [];
+        const reelCols = reelsContainer.querySelectorAll('.reel-col');
+        const reelHeight = 110;
+        const reelsData = [];
 
-            reelCols.forEach((col, colIndex) => {
-                const finalGridCol = [grid[0][colIndex], grid[1][colIndex], grid[2][colIndex]];
-                const newReel = generateSpinningReels(REEL_STRIPS[colIndex], finalGridCol);
-                col.innerHTML = '';
-                newReel.forEach(symbol => {
-                    const reelElement = document.createElement('div');
-                    reelElement.className = 'reel';
-                    reelElement.textContent = symbol;
-                    col.appendChild(reelElement);
-                });
-
-                const finalTranslateY = -(newReel.length - 3) * reelHeight;
-                reelsData.push({ col, finalTranslateY });
-
-                // Ensure starting transform is 0 before adding transition class
-                col.style.transform = 'translateY(0)';
+        reelCols.forEach((col, colIndex) => {
+            const finalGridCol = [grid[0][colIndex], grid[1][colIndex], grid[2][colIndex]];
+            const newReel = generateSpinningReels(REEL_STRIPS[colIndex], finalGridCol);
+            col.innerHTML = '';
+            newReel.forEach(symbol => {
+                col.appendChild(createReelElement(symbol));
             });
 
-            // Force reflow to ensure the initial state is registered by the browser
-            void reelsContainer.offsetHeight;
+            const finalTranslateY = -(newReel.length - 3) * reelHeight;
+            reelsData.push({ col, finalTranslateY });
 
-            // Start animation
-            reelsContainer.classList.add('reels-spinning');
+            // Ensure starting transform is 0 before adding transition class
+            col.style.transform = 'translateY(0)';
+        });
 
-            // Apply target transforms
-            reelsData.forEach(data => {
-                data.col.style.transform = `translateY(${data.finalTranslateY}px)`;
-            });
+        // Force reflow to ensure the initial state is registered by the browser
+        void reelsContainer.offsetHeight;
 
-            const firstReel = reelsContainer.querySelector('.reel-col');
-            firstReel.addEventListener('transitionend', handleSpinEnd, { once: true });
+        // Start animation
+        reelsContainer.classList.add('reels-spinning');
 
-            spinTimeout = setTimeout(handleSpinEnd, 3000);
-        } catch (error) {
-            console.error('Error during spin:', error);
-        }
+        // Apply target transforms
+        reelsData.forEach(data => {
+            data.col.style.transform = `translateY(${data.finalTranslateY}px)`;
+        });
+
+        const firstReel = reelsContainer.querySelector('.reel-col');
+        firstReel.addEventListener('transitionend', handleSpinEnd, { once: true });
+
+        spinTimeout = setTimeout(handleSpinEnd, 3000);
     }
 
     /**
     * Handles the end of the spin animation and resolves the spin result.
     */
     function handleSpinEnd() {
-        if (gameState.fsm.state !== 'SPINNING') return;
-        console.log('handleSpinEnd called');
-        clearTimeout(spinTimeout);
-        try {
-            gameState.fsm.beginResolve();
-            
-            const { grid, payout } = gameState.currentSpinResult;
-
-            // Stop the transition and mark as stopped
-            reelsContainer.classList.remove('reels-spinning');
-            reelsContainer.classList.add('reels-stopped');
-
-            // Reset reels to show only the landed symbols at transform 0
-            const reelCols = reelsContainer.querySelectorAll('.reel-col');
-            reelCols.forEach((col, colIndex) => {
-                const finalGridCol = [grid[0][colIndex], grid[1][colIndex], grid[2][colIndex]];
-                col.innerHTML = '';
-                finalGridCol.forEach(symbol => {
-                    const reelElement = document.createElement('div');
-                    reelElement.className = 'reel';
-                    reelElement.textContent = symbol;
-                    col.appendChild(reelElement);
-                });
-                // Explicitly reset the transform to 0 for a clean 3x3 alignment
-                col.style.transform = 'translateY(0px)';
-            });
-
-            if (payout > 0) {
-                winLoseMessageElement.textContent = 'WIN';
-                gameState.lastWin = payout;
-                updateBalance(gameState.balance + payout);
-                lastWinElement.textContent = gameState.lastWin;
-                statusMessageElement.textContent = `WIN! +${payout}`;
-            } else {
-                winLoseMessageElement.textContent = 'LOSE';
-                const randomIndex = Math.floor(Math.random() * lossMessages.length);
-                statusMessageElement.textContent = lossMessages[randomIndex];
-            }
-
-            gameState.fsm.finishResolve();
-            updateSpinButtonState();
-            console.log('Spin completed successfully');
-        } catch (error) {
-            console.error('Error in handleSpinEnd:', error);
+        if (gameState.fsm.state !== 'SPINNING') {
+            return;
         }
+        clearTimeout(spinTimeout);
+        gameState.fsm.beginResolve();
+
+        const { grid, payout } = gameState.currentSpinResult;
+
+        // Stop the transition and mark as stopped
+        reelsContainer.classList.remove('reels-spinning');
+        reelsContainer.classList.add('reels-stopped');
+
+        // Reset reels to show only the landed symbols at transform 0
+        const reelCols = reelsContainer.querySelectorAll('.reel-col');
+        reelCols.forEach((col, colIndex) => {
+            const finalGridCol = [grid[0][colIndex], grid[1][colIndex], grid[2][colIndex]];
+            col.innerHTML = '';
+            finalGridCol.forEach(symbol => {
+                col.appendChild(createReelElement(symbol));
+            });
+            // Explicitly reset the transform to 0 for a clean 3x3 alignment
+            col.style.transform = 'translateY(0px)';
+        });
+
+        if (payout > 0) {
+            winLoseMessageElement.textContent = 'WIN';
+            gameState.lastWin = payout;
+            updateBalance(gameState.balance + payout);
+            lastWinElement.textContent = gameState.lastWin;
+            statusMessageElement.textContent = `WIN! +${payout}`;
+        } else {
+            winLoseMessageElement.textContent = 'LOSE';
+            const randomIndex = Math.floor(Math.random() * lossMessages.length);
+            statusMessageElement.textContent = lossMessages[randomIndex];
+        }
+
+        gameState.fsm.finishResolve();
+        updateLeverState();
     }
 
 
@@ -229,7 +233,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (newBet >= 5) {
             gameState.bet = newBet;
             betElement.textContent = newBet;
-            updateSpinButtonState();
+            updateLeverState();
         }
     }
 
@@ -264,18 +268,90 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Spin button functionality
-    if (spinButton) {
-        console.log('Spin button found, attaching event listeners');
-        spinButton.addEventListener('click', handleSpin);
-        spinButton.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                handleSpin();
+    // Drag-to-spin lever
+    if (leverHandle && leverTrack) {
+        const PULL_THRESHOLD = 1;
+        const MAX_REEL_PREVIEW_PX = 25;
+
+        let dragPointerId = null;
+        let dragStartY = 0;
+        let dragMaxTravel = 0;
+        let currentPull = 0;
+
+        /**
+         * Writes the current pull (0..1) to the track and nudges the reels
+         * for the preview wiggle. Actual spinning is only triggered on release
+         * when the lever reaches full pull.
+         * @param {number} pull
+         */
+        function setPull(pull) {
+            currentPull = Math.max(0, Math.min(1, pull));
+            leverTrack.style.setProperty('--pull', String(currentPull));
+
+            const previewOffset = -currentPull * MAX_REEL_PREVIEW_PX;
+            const reelCols = reelsContainer.querySelectorAll('.reel-col');
+            reelCols.forEach((col) => {
+                col.style.transform = `translateY(${previewOffset}px)`;
+            });
+        }
+
+        /**
+         * Snaps the lever back to the top and clears the reel preview.
+         */
+        function resetLever() {
+            setPull(0);
+        }
+
+        function onPointerDown(event) {
+            if (!canPullLever()) {return;}
+            dragPointerId = event.pointerId;
+            dragStartY = event.clientY;
+            dragMaxTravel = Math.max(
+                1,
+                leverTrack.clientHeight - leverHandle.clientHeight - 8,
+            );
+            leverTrack.classList.add('is-dragging');
+            leverHandle.setPointerCapture(event.pointerId);
+            event.preventDefault();
+        }
+
+        function onPointerMove(event) {
+            if (event.pointerId !== dragPointerId) {return;}
+            const delta = event.clientY - dragStartY;
+            setPull(delta / dragMaxTravel);
+        }
+
+        function endDrag(event) {
+            if (event.pointerId !== dragPointerId) {return;}
+            dragPointerId = null;
+            leverTrack.classList.remove('is-dragging');
+            if (leverHandle.hasPointerCapture(event.pointerId)) {
+                leverHandle.releasePointerCapture(event.pointerId);
             }
+
+            if (currentPull >= PULL_THRESHOLD) {
+                handleSpin();
+                // Let the player see the lever at full pull for a beat,
+                // then spring it back up.
+                setTimeout(resetLever, 180);
+            } else {
+                resetLever();
+            }
+        }
+
+        leverHandle.addEventListener('pointerdown', onPointerDown);
+        leverHandle.addEventListener('pointermove', onPointerMove);
+        leverHandle.addEventListener('pointerup', endDrag);
+        leverHandle.addEventListener('pointercancel', endDrag);
+
+        leverHandle.addEventListener('keydown', (e) => {
+            if (e.key !== 'Enter' && e.key !== ' ') {return;}
+            e.preventDefault();
+            if (!canPullLever()) {return;}
+            setPull(1);
+            handleSpin();
+            setTimeout(resetLever, 180);
         });
-    } else {
-        console.error('Spin button not found in DOM!');
     }
 
 
@@ -337,7 +413,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Initial check
-    updateSpinButtonState();
+    updateLeverState();
 
 
     // Initialize jackpot counter

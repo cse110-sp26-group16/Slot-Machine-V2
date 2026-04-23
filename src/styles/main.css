@@ -33,11 +33,11 @@ body.theme-ai-satire {
   animation: gradient-bg 15s ease infinite;
   color: var(--text-color);
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
   min-height: 100vh;
   margin: 0;
+  padding: 2rem;
   overflow: hidden;
   position: relative;
 }
@@ -73,40 +73,119 @@ body.theme-ai-satire::before {
   }
 }
 
-.site-title {
-  font-family: 'Zen Dots', sans-serif;
-  text-align: center;
-  font-size: 3rem;
-  color: #ffffff;
-  text-shadow:
-    0 0 5px #ffffff,
-    0 0 10px #ffffff,
-    0 0 20px var(--accent),
-    0 0 40px var(--accent),
-    0 0 80px var(--accent);
-  margin-bottom: 2rem;
+/* ---------- Left dashboard sidebar ---------- */
+
+.dashboard {
+  position: fixed;
+  top: 50%;
+  left: 2rem;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  width: 260px;
+  padding: 1.5rem;
+  background: var(--panel-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgb(0 206 201 / 15%), 0 0 40px rgb(108 92 231 / 10%);
+  backdrop-filter: blur(10px);
+  z-index: 10;
+  color: var(--text-color);
 }
 
-.rtp-display {
+.dashboard-header {
   text-align: center;
-  margin-bottom: 1rem;
-  font-size: 1rem;
-  font-weight: bold;
+  margin: 0 0 0.5rem;
+}
+
+.dashboard-title {
+  font-family: 'Zen Dots', sans-serif;
+  font-size: 1.4rem;
+  line-height: 1.1;
+  margin: 0;
+  color: #ffffff;
+  text-shadow:
+    0 0 4px #ffffff,
+    0 0 12px var(--accent),
+    0 0 24px var(--accent);
+}
+
+.dashboard-subtitle {
+  margin: 0.4rem 0 0;
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
   color: var(--secondary);
 }
 
-.jackpot-counter {
-  position: absolute;
-  top: 2rem;
-  left: 2rem;
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: var(--accent);
-  text-shadow: 0 0 8px var(--accent);
+.dashboard-stat {
+  background: rgb(0 0 0 / 40%);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 0.6rem 0.9rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
 }
 
+.dashboard-stat--highlight {
+  border-color: var(--accent);
+  box-shadow: 0 0 12px rgb(0 206 201 / 25%);
+}
+
+.dashboard-label {
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--secondary);
+}
+
+.dashboard-value {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--accent);
+  text-shadow: 0 0 6px var(--accent);
+  word-break: break-all;
+}
+
+.bet-control-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.bet-adjust-button {
+  background-color: transparent;
+  border: 1px solid var(--secondary);
+  color: var(--secondary);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
+}
+
+.bet-adjust-button:hover {
+  background-color: var(--secondary);
+  color: var(--background);
+  box-shadow: 0 0 8px rgb(162 155 254 / 60%);
+}
+
+/* ---------- Slot machine cabinet ---------- */
+
 .slot-machine {
-  padding: 2.5rem;
+  padding: 2rem 2.5rem 4.5rem;
   background: var(--panel-bg);
   border: 2px solid var(--border-color);
   border-radius: 15px;
@@ -115,25 +194,31 @@ body.theme-ai-satire::before {
   position: relative;
   z-index: 1;
   transition: box-shadow 0.3s ease;
-  width: fit-content;
 }
 
 .slot-machine:hover {
   box-shadow: 0 0 30px rgb(0 206 201 / 30%), 0 0 60px rgb(108 92 231 / 20%);
 }
 
+.slot-machine-body {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  width: max-content;
+}
+
 .reels {
   display: flex;
   gap: 20px;
   border: 2px solid var(--border-color);
-  padding: 10px 25px; /* 10px top/bottom to allow 330px content area */
+  padding: 10px 25px;
   background-color: rgb(0 0 0 / 40%);
   width: 424px;
   box-sizing: border-box;
   border-radius: 8px;
   box-shadow: inset 0 0 15px rgb(0 0 0 / 60%);
-  overflow: hidden; /* Hide the spinning overflow */
-  height: 350px; /* Set a fixed height */
+  overflow: hidden;
+  height: 350px;
 }
 
 .reel-col {
@@ -150,9 +235,8 @@ body.theme-ai-satire::before {
 }
 
 .reels-stopped .reel-col {
-    transition: none;
+  transition: none;
 }
-
 
 .reel {
   width: 110px;
@@ -162,144 +246,169 @@ body.theme-ai-satire::before {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 4rem;
   color: var(--accent);
-  text-shadow: 0 0 10px var(--accent), 0 0 20px var(--accent);
   border-radius: 4px;
   transition: transform 0.1s, box-shadow 0.2s;
-  flex-shrink: 0; /* Prevent reels from shrinking */
+  flex-shrink: 0;
+}
+
+.reel-icon {
+  width: 72%;
+  height: 72%;
+  filter:
+    drop-shadow(0 0 4px var(--accent))
+    drop-shadow(0 0 10px rgb(0 206 201 / 55%));
 }
 
 .win-lose-message {
-    position: absolute;
-    top: 50%;
-    right: -100px;
-    transform: translateY(-50%);
-    font-size: 2rem;
-    font-weight: bold;
-    color: white;
-    text-shadow: 2px 2px 4px black;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, -140%);
+  font-family: 'Zen Dots', sans-serif;
+  font-size: 2rem;
+  font-weight: bold;
+  color: #ffffff;
+  text-shadow: 0 0 12px var(--accent), 0 0 24px var(--accent);
+  letter-spacing: 0.15em;
 }
 
 .status-message {
+  position: absolute;
+  left: 2.5rem;
+  right: 2.5rem;
+  bottom: 1rem;
+  box-sizing: border-box;
+  margin: 0;
+  min-height: 2.2em;
   text-align: center;
-  height: 3em;
-  margin-top: 2rem;
-  font-size: 1.3rem;
-  font-weight: bold;
+  font-size: 1.05rem;
+  font-weight: 700;
   color: var(--accent);
   text-shadow: 0 0 8px var(--accent);
   white-space: normal;
   word-wrap: break-word;
-  width: 424px;
+  overflow-wrap: anywhere;
 }
 
-.dashboard {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  background: linear-gradient(to top, rgb(13 12 29 / 95%) 60%, transparent);
-  color: var(--text-color);
+/* ---------- Lever (attached to slot machine) ---------- */
+
+.lever-assembly {
+  --lever-handle-size: 64px;
+  --lever-track-height: 210px;
+  --lever-travel: calc(var(--lever-track-height) - var(--lever-handle-size));
+
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: center;
-  padding: 1.5rem 4rem 2.5rem;
-  box-sizing: border-box;
-  z-index: 10;
+  gap: 0.6rem;
+  user-select: none;
 }
 
-.dashboard-info {
-  display: flex;
-  gap: 1.5rem;
-}
-
-.dashboard-stat {
-  background: rgb(0 0 0 / 50%);
-  padding: 0.8rem 1.5rem;
-  border-radius: 8px;
+.lever-mount {
+  width: 26px;
+  height: 14px;
+  background: linear-gradient(to bottom, #2a2450, #141028);
   border: 1px solid var(--border-color);
-  box-shadow: 0 0 10px rgb(0 206 201 / 10%);
-  text-align: center;
-  min-width: 120px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
+  border-bottom: none;
+  border-radius: 6px 6px 0 0;
+  box-shadow: 0 0 6px rgb(108 92 231 / 40%);
 }
 
-.dashboard-stat span {
-  font-size: 1.1rem;
-  font-weight: 700;
+.lever-track {
+  --pull: 0;
+
+  position: relative;
+  width: calc(var(--lever-handle-size) + 14px);
+  height: var(--lever-track-height);
+  border: 1px solid var(--border-color);
+  border-radius: calc(var(--lever-handle-size) / 2 + 8px);
+  background:
+    linear-gradient(to bottom, rgb(0 0 0 / 60%), rgb(23 28 48 / 90%));
+  box-shadow:
+    inset 0 0 12px rgb(0 0 0 / 70%),
+    0 0 10px rgb(0 206 201 / 15%);
+  touch-action: none;
 }
 
-#balance,
-#current-bet,
-#last-win {
-  font-family: 'IBM Plex Mono', monospace;
+.lever-rod {
+  position: absolute;
+  top: calc(var(--lever-handle-size) / 2);
+  left: 50%;
+  width: 6px;
+  height: calc(var(--pull) * var(--lever-travel));
+  transform: translateX(-50%);
+  background: linear-gradient(to bottom, var(--secondary), var(--primary));
+  box-shadow: 0 0 6px rgb(108 92 231 / 60%);
+  border-radius: 3px;
+  pointer-events: none;
+  transition: height 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-.dashboard-stat span span {
-  color: var(--accent);
-  text-shadow: 0 0 5px var(--accent);
+.lever-track.is-dragging .lever-rod {
+  transition: none;
 }
 
-.dashboard-actions {
-  display: flex;
-  align-items: center;
-}
-
-.spin-button {
-  background-color: var(--primary);
-  border: 1px solid var(--secondary);
-  color: #ffffff;
-  font-size: 1.8rem;
-  width: 140px;
-  height: 140px;
-  font-family: 'IBM Plex Mono', monospace;
-  font-weight: 700;
-  cursor: pointer;
+.lever-handle {
+  position: absolute;
+  top: 7px;
+  left: 50%;
+  width: var(--lever-handle-size);
+  height: var(--lever-handle-size);
+  transform: translate(-50%, calc(var(--pull) * var(--lever-travel)));
+  background: radial-gradient(circle at 35% 30%, var(--accent), var(--primary) 70%, #1a1440);
+  border: 2px solid var(--secondary);
   border-radius: 50%;
-  transition: background-color 0.2s, box-shadow 0.2s, transform 0.1s;
-  text-transform: uppercase;
-  box-shadow: 0 0 15px rgb(108 92 231 / 40%);
+  cursor: grab;
+  box-shadow:
+    0 0 12px rgb(108 92 231 / 50%),
+    inset 0 -4px 10px rgb(0 0 0 / 50%),
+    inset 0 4px 6px rgb(255 255 255 / 20%);
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.spin-button:hover {
-  background-color: var(--accent);
-  color: var(--background);
-  box-shadow: 0 0 15px var(--accent);
+.lever-handle:focus-visible {
+  outline: 3px solid var(--button-focus-ring);
+  outline-offset: 4px;
 }
 
-.spin-button:active {
-  transform: scale(0.98);
+.lever-track.is-dragging .lever-handle {
+  cursor: grabbing;
+  transition: none;
+  box-shadow:
+    0 0 20px var(--accent),
+    inset 0 -4px 10px rgb(0 0 0 / 50%);
 }
 
-.spin-button:disabled {
+.lever-ball {
+  width: 55%;
+  height: 55%;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 25%, #ffffff 0%, var(--accent) 60%, transparent 75%);
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+.lever-handle[aria-disabled='true'] {
   cursor: not-allowed;
-  background-color: #5a5a5a;
+  filter: grayscale(0.7) brightness(0.6);
   box-shadow: none;
-  color: #9e9e9e;
 }
 
-.bet-adjust-button {
-    background-color: #4CAF50;
-    border: none;
-    color: white;
-    padding: 10px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
-    cursor: pointer;
-    border-radius: 50%;
-    width: 30px;
-    height: 30px;
-    line-height: 10px;
+.lever-hint {
+  margin: 0;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: var(--secondary);
+  text-transform: uppercase;
+  text-shadow: 0 0 6px rgb(162 155 254 / 60%);
 }
+
+/* ---------- Top-right controls ---------- */
 
 .info-button,
 .mute-button,
@@ -346,23 +455,27 @@ body.theme-ai-satire::before {
   right: 1.5rem;
   z-index: 100;
   display: flex;
-    gap: 10px;
+  gap: 10px;
 }
 
 .settings-button {
-  width: 3.5rem;
+  min-width: 3.5rem;
   height: 3.5rem;
-  padding: 0;
-  font-size: 1.8rem;
+  padding: 0 1rem;
+  font-size: 1rem;
+  font-family: 'IBM Plex Mono', monospace;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
   display: flex;
   align-items: center;
   justify-content: center;
   border: 1px solid var(--border-color);
   background-color: var(--panel-bg);
   color: var(--accent);
-  border-radius: 50%;
+  border-radius: 6px;
   cursor: pointer;
-  transition: background-color 0.2s, transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.2s;
+  transition: background-color 0.2s, box-shadow 0.2s;
   box-shadow: 0 0 10px rgb(0 206 201 / 20%);
 }
 
@@ -372,7 +485,6 @@ body.theme-ai-satire::before {
 }
 
 .settings-button[aria-expanded='true'] {
-  transform: rotate(90deg);
   background-color: rgb(253 121 168 / 20%);
   border-color: var(--button-focus-ring);
   color: var(--button-focus-ring);
@@ -393,14 +505,16 @@ body.theme-ai-satire::before {
   gap: 0.5rem;
 }
 
-.spin-button:focus,
 .info-button:focus,
 .mute-button:focus,
 .settings-button:focus,
-.menu-button:focus {
+.menu-button:focus,
+.bet-adjust-button:focus-visible {
   outline: 3px solid var(--button-focus-ring);
   outline-offset: 4px;
 }
+
+/* ---------- Modal ---------- */
 
 .modal-overlay {
   position: fixed;
@@ -437,14 +551,46 @@ body.theme-ai-satire::before {
 #paytable-content ul {
   list-style: none;
   padding: 0;
+  margin: 0;
 }
 
 #paytable-content li {
-  margin-bottom: 0.5rem;
-  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.25rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid rgb(0 206 201 / 15%);
+  font-family: 'IBM Plex Mono', monospace;
+  color: var(--accent);
 }
 
-/* Background Lights (Keep but unify with animated background) */
+#paytable-content li:last-child {
+  border-bottom: none;
+}
+
+.paytable-row {
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.paytable-icon {
+  width: 32px;
+  height: 32px;
+  color: var(--accent);
+  filter: drop-shadow(0 0 3px var(--accent));
+}
+
+.paytable-payout {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--secondary);
+  text-shadow: 0 0 4px rgb(162 155 254 / 60%);
+}
+
+/* ---------- Background lights ---------- */
+
 .background-lights {
   position: absolute;
   top: 0;
@@ -515,7 +661,8 @@ body.theme-ai-satire::before {
   animation-delay: -10s;
 }
 
-/* Accessibility & State overrides */
+/* ---------- Accessibility & responsive ---------- */
+
 body.animations-disabled,
 body.animations-disabled * {
   animation: none !important;
@@ -525,10 +672,27 @@ body.animations-disabled * {
 @media (prefers-reduced-motion: reduce) {
   body.theme-ai-satire,
   .light,
-  .spin-button,
+  .lever-handle,
+  .lever-rod,
   .settings-button,
   .reel {
     animation: none !important;
     transition: none !important;
+  }
+}
+
+@media (width <= 1100px) {
+  body.theme-ai-satire {
+    flex-direction: column;
+    overflow: auto;
+    padding: 1rem;
+  }
+
+  .dashboard {
+    position: static;
+    transform: none;
+    width: 100%;
+    max-width: 460px;
+    margin-bottom: 1.5rem;
   }
 }
