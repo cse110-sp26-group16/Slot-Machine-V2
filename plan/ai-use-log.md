@@ -1,5 +1,3 @@
-# UI Prompt Log
-
 ## Entry 1: Original Prompt
 1. Files: index.html (new), src/ui/main.js (new), src/styles/main.css (new).
 
@@ -218,11 +216,57 @@ Do NOT modify game logic or payout calculations, Follow GEMINI.md §Invariants 7
 - Increase the jackpot increments by more, the starting value should be in the low 900,00s to the millions. 
 
 
+## Entry 10: Iteration 9
 
+The functionality for the game has already been implemented in the repository's javascript files. Connect relevant parts of the UI to the javascript logic to ensure that the core features of the application are functional, such as the spin button button and the betting feature.
 
+# Entry 11: Iteration 10
 
+Do NOT modify game logic or payout calculations, Follow GEMINI.md §Invariants 7, Ensure all UI interactions do not break gameplay functionality
 
+The game is currently not functional. Pressing the spin button does not trigger any animations or gameplay, even though it is supposed to. Pressing the + and - buttons on the bet box also do not do anything. Fix the spin button and the bet buttons.
 
+# Entry 12: Iteration 11
+
+Fix the slot machine spin functionality in this project. There are two bugs:
+1. **Grid not rendering**: In `src/ui/main.js`, the `handleSpin()` function calculates a grid result using `drawGrid()` but never updates the DOM. The `.reel` div elements inside each `.reel-col` need to be updated with the symbols from `gameState.currentSpinResult.grid` after the spin animation completes. The grid is a 3x3 array where `grid[row][col]` contains the symbol - you need to update the 3 visible reels (middle row, index 1) in each column to show the result.
+2. **transitionend listener**: The event listener on line 90 listens for `transitionend` on `reelsContainer` (.reels), but the CSS transition is on `.reel-col` children. Either:
+   - Listen on the first `.reel-col` element directly, OR
+   - Use a `setTimeout` matching the CSS transition duration (2s) as a fallback
+Files to modify:
+- `src/ui/main.js` - Add DOM update logic in `handleSpinEnd()` to render the grid result to the reel elements, and fix the event listener
+The current flow should be:
+1. User clicks Spin → deduct bet, start animation
+2. Animation runs for 2 seconds
+3. `handleSpinEnd()` is called → update reel symbols with grid result, show win/lose
+
+# Entry 13: Iteration 12
+
+Do NOT modify game logic or payout calculations, Follow GEMINI.md §Invariants 7, Ensure all UI interactions do not break gameplay functionality
+
+When the spin button is clicked, the spinner spin for a very short amount of time. Make the spinning animation faster and last longer. The spinners should move so fast that there is essentially a blurring effect while they are spinning. After 3 seconds, the spinners should land on their respective symbols.
+
+# Entry 14: Iteration 13
+
+Do NOT modify game logic or payout calculations, Follow GEMINI.md §Invariants 7, Ensure all UI interactions do not break gameplay functionality
+
+When the spin button is clicked, the spinner speed is good now, but there are a few issues that must be fixed:
+- The symbols should always remain visible while the animation is playing, they should never disappear and show a blank box
+- The symbols should be scrambled-- we should not always be seeing the same 3 symbols in a line while it is spinning
+- Once the animation is finished, it shouldn't abruptly land on the final result. The spinner should smoothly land on the symbols.
+- The end result is good, but not the animations that lead up to it.
+
+# Entry 15: Iteration 14
+
+Do NOT modify game logic or payout calculations, Follow GEMINI.md §Invariants 7, Ensure all UI interactions do not break gameplay functionality
+
+When the spinner animation finishes, the symbols that the spinner appears to land on abruptly change to different symbols. However, the final result should be the same as the ending symbols of the animation. There should be no abrupt changes-- everything should be one smooth, cohesive animation.
+
+# Entry 17: Iteration 15
+
+Do NOT modify game logic or payout calculations, Follow GEMINI.md §Invariants 7, Ensure all UI interactions do not break gameplay functionality
+
+When the spinner finishes its animation, a message at the bottom displays. Sometimes, this message is too long and thus, expands its container to the right. But we do not want the box to expand. Rather, the message should go to the next line
 
 
 
