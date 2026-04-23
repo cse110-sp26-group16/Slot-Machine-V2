@@ -403,4 +403,17 @@ The text at the bottom keeps changing the width of the overall slot machine div,
 
 no the different length text is still changing the width of the box
 
+# Entry 29: Iteration 27
+
+Add JSDoc with type annotations to src/game/logic.js in this repo. Every other module in src/game/ (rng.js, fsm.js, grid.js, payline.js) already has JSDoc with typed @param / @returns, and the assignment requires documented code — logic.js is the only file missing it.
+
+Specifically:
+- Add a JSDoc block above the LogicError class and its constructor.
+- Add JSDoc blocks above the exported calculateBalance(balance, stake) and resolveSpin(balance, stake, winnings) functions, including @param types, @returns, and @throws {LogicError} where applicable.
+- For resolveSpin, document the returned object shape ({ newBalance: number, message: string }) — either via @returns with an inline type or a @typedef.
+- Match the comment style used in src/game/fsm.js and src/game/rng.js for consistency.
+- Do not change any runtime behavior. Do not add any types.
+
+After editing, run npm run lint and npx vitest run to confirm nothing regressed.
+
 
