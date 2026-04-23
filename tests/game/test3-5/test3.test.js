@@ -1,8 +1,8 @@
 import { describe, it, expect, beforeEach } from 'vitest';
-import { createFsm } from '../../src/game/fsm.js';
-import { drawGrid } from '../../src/game/grid.js';
-import { evaluateGrid } from '../../src/game/payline.js';
-import { createRng } from '../../src/game/rng.js';
+import { createFsm } from '../../../src/game/fsm.js';
+import { drawGrid } from '../../../src/game/grid.js';
+import { evaluateGrid } from '../../../src/game/payline.js';
+import { createRng } from '../../../src/game/rng.js';
 
 /**
  * Test for state persistance, if we refresh the page during a spin the state 
