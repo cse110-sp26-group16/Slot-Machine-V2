@@ -130,8 +130,8 @@ describe('Story 3: State Persistence', () => {
     currentBalance += payout1;
     gameState.fsm.finishResolve();
 
-    let saved = JSON.stringify({ balance: currentBalance, bet: gameState.bet });
-    let restored = JSON.parse(saved);
+    const saved = JSON.stringify({ balance: currentBalance, bet: gameState.bet });
+    const restored = JSON.parse(saved);
     expect(restored.balance).toBe(currentBalance);
 
     gameState.fsm.beginSpin();
