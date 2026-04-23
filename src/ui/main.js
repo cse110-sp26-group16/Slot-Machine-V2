@@ -72,7 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
      * Handles the spin button click event.
      */
     function generateSpinningReels(reelStrip, finalGrid) {
-        const repeatedStrip = Array.from({ length: 30 }, () => reelStrip).flat();
+        const repeatedStrip = Array.from({ length: 5 }, () => reelStrip).flat();
         for (let i = repeatedStrip.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
             [repeatedStrip[i], repeatedStrip[j]] = [repeatedStrip[j], repeatedStrip[i]];
@@ -114,6 +114,9 @@ document.addEventListener('DOMContentLoaded', () => {
             console.log('Spin result calculated', { grid, payout });
 
             const reelCols = reelsContainer.querySelectorAll('.reel-col');
+            const reelHeight = 110;
+            const reelsData = [];
+
             reelCols.forEach((col, colIndex) => {
                 const finalGridCol = [grid[0][colIndex], grid[1][colIndex], grid[2][colIndex]];
                 const newReel = generateSpinningReels(REEL_STRIPS[colIndex], finalGridCol);
@@ -125,13 +128,23 @@ document.addEventListener('DOMContentLoaded', () => {
                     col.appendChild(reelElement);
                 });
 
-                const reelHeight = 110;
                 const finalTranslateY = -(newReel.length - 3) * reelHeight;
-                col.style.transform = `translateY(${finalTranslateY}px)`;
+                reelsData.push({ col, finalTranslateY });
+
+                // Ensure starting transform is 0 before adding transition class
+                col.style.transform = 'translateY(0)';
             });
+
+            // Force reflow to ensure the initial state is registered by the browser
+            void reelsContainer.offsetHeight;
 
             // Start animation
             reelsContainer.classList.add('reels-spinning');
+
+            // Apply target transforms
+            reelsData.forEach(data => {
+                data.col.style.transform = `translateY(${data.finalTranslateY}px)`;
+            });
 
             const firstReel = reelsContainer.querySelector('.reel-col');
             firstReel.addEventListener('transitionend', handleSpinEnd, { once: true });
@@ -146,14 +159,32 @@ document.addEventListener('DOMContentLoaded', () => {
     * Handles the end of the spin animation and resolves the spin result.
     */
     function handleSpinEnd() {
+        if (gameState.fsm.state !== 'SPINNING') return;
         console.log('handleSpinEnd called');
         clearTimeout(spinTimeout);
         try {
             gameState.fsm.beginResolve();
+            
+            const { grid, payout } = gameState.currentSpinResult;
+
+            // Stop the transition and mark as stopped
             reelsContainer.classList.remove('reels-spinning');
             reelsContainer.classList.add('reels-stopped');
 
-            const { payout } = gameState.currentSpinResult;
+            // Reset reels to show only the landed symbols at transform 0
+            const reelCols = reelsContainer.querySelectorAll('.reel-col');
+            reelCols.forEach((col, colIndex) => {
+                const finalGridCol = [grid[0][colIndex], grid[1][colIndex], grid[2][colIndex]];
+                col.innerHTML = '';
+                finalGridCol.forEach(symbol => {
+                    const reelElement = document.createElement('div');
+                    reelElement.className = 'reel';
+                    reelElement.textContent = symbol;
+                    col.appendChild(reelElement);
+                });
+                // Explicitly reset the transform to 0 for a clean 3x3 alignment
+                col.style.transform = 'translateY(0px)';
+            });
 
             if (payout > 0) {
                 winLoseMessageElement.textContent = 'WIN';

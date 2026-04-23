@@ -268,10 +268,86 @@ Do NOT modify game logic or payout calculations, Follow GEMINI.md §Invariants 7
 
 When the spinner finishes its animation, a message at the bottom displays. Sometimes, this message is too long and thus, expands its container to the right. But we do not want the box to expand. Rather, the message should go to the next line
 
+# Entry 18: Iteration 16
 
+Do NOT modify game logic or payout calculations, Follow GEMINI.md §Invariants 7, Ensure all UI interactions do not break gameplay functionality
 
+When the spin button is clicked, the first spin works correctly. However, after the first spin finishes, clicking the spin button again no longer causes the reels to spin. The UI still updates and shows whether the player wins or loses, but the reel animation and repeated spin flow are broken.
 
+Fix the following issues:
+- After a completed spin, the reels should be able to spin again on the next click
+- Any UI-side animation classes, transform reset behavior, timeout handling, or state reset logic preventing repeated spins should be fixed
+- The repeated spin flow should remain smooth and consistent with the current animation behavior
+- Do not remove or break the current win/lose message, bet controls, modal, settings menu, mute toggle, or reduced-motion behavior
 
+Our files will be index.html, src/styles/main.css, and src/ui/main.js
 
+# Entry 19: Iteration 17
+
+Do NOT modify game logic or payout calculations, Follow GEMINI.md §Invariants 7, Ensure all UI interactions do not break gameplay functionality
+
+When the spin button is clicked, the repeated spin bug is fixed now, but there is still an animation issue that must be corrected:
+- When the spinner animation finishes, there is still a weird jump before the final result settles
+- The reels should land smoothly on the final symbols with no abrupt visual jump
+- The ending symbols of the animation should match the final visible result exactly
+- The transition from spinning to stopped state should look continuous and cohesive
+
+Do not remove or break the current repeated spin functionality, win/lose message, bet controls, modal, settings menu, mute toggle, or reduced-motion behavior
+
+Our files will be index.html, src/styles/main.css, and src/ui/main.js
+
+# Entry 20: Iteration 18
+
+Do NOT modify game logic or payout calculations, Follow GEMINI.md §Invariants 7, Ensure all UI interactions do not break gameplay functionality
+
+When the spin button is clicked, the repeated spin bug is fixed now, but there is still an animation issue that must be corrected:
+- After the reels finish spinning, there is still a weird jump before the final result settles
+- The final landed symbols should already be the visible ending symbols of the animation
+- There should be no extra DOM swap, abrupt transform reset, or visual snap after the reels appear to land
+- The landing should remain smooth and continuous from the spin animation into the final stopped state
+
+Fix the following issues:
+- Any UI-side logic in src/ui/main.js that rebuilds, replaces, or re-renders the reel contents after the animation finishes should be adjusted so the final visible symbols remain consistent with the animation landing
+- Any class, transform, or timeout handling that causes a second visual state change after the reels appear to stop should be fixed
+- The final visible reel state should exactly match the ending frame of the animation
+- Do not remove or break the current repeated spin functionality, win/lose message, bet controls, modal, settings menu, mute toggle, or reduced-motion behavior
+
+Our files will be index.html, src/styles/main.css, and src/ui/main.js
+
+# Entry 21: Iteration 19
+
+Do NOT modify game logic or payout calculations, Follow GEMINI.md §Invariants 7, Ensure all UI interactions do not break gameplay functionality
+
+When the spin button is clicked, there are still animation and landing issues that must be corrected:
+- After the reels finish spinning, there is still a weird visual jump before the final result settles
+- The final visible symbols are not aligned correctly in the reel window after the spin
+- The reels should land smoothly and the final 3x3 visible symbols should be centered and aligned correctly
+- The final visible symbols should exactly match the ending state of the animation with no abrupt snap or offset
+
+Fix the following issues:
+- Any UI-side transform, DOM reset, or reel content update logic in src/ui/main.js that causes the reels to become misaligned after the animation finishes should be fixed
+- Any CSS in src/styles/main.css that causes the reel columns or visible symbols to sit at the wrong vertical position after landing should be corrected
+- The final resting state should keep the symbols properly aligned in the 3x3 viewport
+- Do not remove or break the current repeated spin functionality, win/lose message, bet controls, modal, settings menu, mute toggle, or reduced-motion behavior
+
+Our files will be index.html, src/styles/main.css, and src/ui/main.js
+
+# Entry 22: Iteration 20
+
+Do NOT modify game logic or payout calculations, Follow GEMINI.md §Invariants 7, Ensure all UI interactions do not break gameplay functionality
+
+When the spin button is clicked, the repeated spin bug is fixed now, but there is still a final landing alignment issue that must be corrected:
+- After the reels finish spinning, the final visible symbols are not vertically aligned correctly in the reel window
+- There is still extra offset/empty space in the reel viewport after landing
+- The final 3x3 visible symbols should sit centered and aligned exactly in the reel frame
+- The final visible resting state should match a clean 3x3 grid with no extra top spacing, offset, or snap
+
+Fix the following issues:
+- Any UI-side DOM reset or reel content replacement logic in src/ui/main.js that leaves the reel columns at the wrong final vertical position should be corrected
+- Any CSS in src/styles/main.css that causes the reel viewport or reel columns to preserve extra top offset after the animation finishes should be corrected
+- The final resting state should display the landed symbols in a properly aligned 3x3 layout
+- Do not remove or break the current repeated spin functionality, win/lose message, bet controls, modal, settings menu, mute toggle, or reduced-motion behavior
+
+Our files will be index.html, src/styles/main.css, and src/ui/main.js
 
 

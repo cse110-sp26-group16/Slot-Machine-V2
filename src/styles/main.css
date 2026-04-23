@@ -17,6 +17,10 @@
   --error-color: #ff7675;
 }
 
+* {
+  box-sizing: border-box;
+}
+
 [hidden] {
   display: none !important;
 }
@@ -119,10 +123,10 @@ body.theme-ai-satire::before {
 }
 
 .reels {
-  display: flex; /* Changed from grid to flex */
+  display: flex;
   gap: 20px;
   border: 2px solid var(--border-color);
-  padding: 25px;
+  padding: 10px 25px; /* 10px top/bottom to allow 330px content area */
   background-color: rgb(0 0 0 / 40%);
   width: 424px;
   box-sizing: border-box;
@@ -146,7 +150,6 @@ body.theme-ai-satire::before {
 }
 
 .reels-stopped .reel-col {
-    transform: translateY(0);
     transition: none;
 }
 
