@@ -262,11 +262,11 @@ Do NOT modify game logic or payout calculations, Follow GEMINI.md §Invariants 7
 
 When the spinner animation finishes, the symbols that the spinner appears to land on abruptly change to different symbols. However, the final result should be the same as the ending symbols of the animation. There should be no abrupt changes-- everything should be one smooth, cohesive animation.
 
-# Entry 16: Iteration 15
+# Entry 17: Iteration 15
 
 Do NOT modify game logic or payout calculations, Follow GEMINI.md §Invariants 7, Ensure all UI interactions do not break gameplay functionality
 
-When the spinner is done spinning, its container randomly expands horizontally. However, this should not happen and the container should stay the same size throughout, even after the animation is over. Ensure that the box size remains consistent and does not suddenly change.
+When the spinner finishes its animation, a message at the bottom displays. Sometimes, this message is too long and thus, expands its container to the right. But we do not want the box to expand. Rather, the message should go to the next line
 
 
 
