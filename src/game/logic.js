@@ -48,4 +48,4 @@ export function resolveSpin(balance, stake, winnings) {
     newBalance,
     message
   };
-}Q
+}
